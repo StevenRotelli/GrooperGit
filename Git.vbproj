@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6BCB5DAA-FC8D-4E4A-B7E7-09AA1416FF24}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Git</RootNamespace>
+    <AssemblyName>Git</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <WarningLevel>0</WarningLevel>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Git.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Git.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Grooper">
+      <HintPath>C:\Program Files\BIS\Grooper\Grooper.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Grooper.Activities">
+      <HintPath>C:\Program Files\BIS\Grooper\Grooper.Activities.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Grooper.Core">
+      <HintPath>C:\Program Files\BIS\Grooper\Grooper.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Grooper.Services">
+      <HintPath>C:\Program Files\BIS\Grooper\Grooper.Services.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Grooper.Extract">
+      <HintPath>C:\Program Files\BIS\Grooper\Grooper.Extract.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files\BIS\Grooper\Third Party\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Grooper" />
+    <Import Include="Grooper.Activities" />
+    <Import Include="Grooper.Core" />
+    <Import Include="Grooper.Extract" />
+    <Import Include="Grooper.Services" />
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.ComponentModel" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Runtime.Serialization" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FileManager.vb" />
+    <Compile Include="GitMonitor.vb" />
+    <Compile Include="GitObject.vb" />
+    <Compile Include="Commands\GitObjectCommands\Unstage.vb" />
+    <Compile Include="Commands\ObjectCommands\MarkAsChanged.vb" />
+    <Compile Include="Commands\ObjectCommands\Publish.vb" />
+    <Compile Include="Commands\GitObjectCommands\Commit.vb" />
+    <Compile Include="Commands\GitObjectCommands\Compare.vb" />
+    <Compile Include="Commands\GitObjectCommands\Fetch.vb" />
+    <Compile Include="Commands\GitObjectCommands\Merge.vb" />
+    <Compile Include="Commands\GitObjectCommands\Pull.vb" />
+    <Compile Include="Commands\GitObjectCommands\Push.vb" />
+    <Compile Include="Commands\GitObjectCommands\Stage.vb" />
+    <Compile Include="Node Types\GitProject.vb" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Property Grid\Editors\MarkDownEditor.vb" />
+    <Compile Include="UI\Property Grid\Type Converters\RepositoryVisibility.vb" />
+    <Compile Include="UI\Property Grid\Type Converters\BranchListConverter.vb" />
+    <Compile Include="ScriptingSession.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="README.MD" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Branch.png" />
+    <Content Include="Images\BlueCheck.png" />
+    <Content Include="Images\Commit.png" />
+    <Content Include="Images\Diff.png" />
+    <Content Include="Images\Fetch.png" />
+    <Content Include="Images\Fetch_old.png" />
+    <Content Include="Images\Git.png" />
+    <Content Include="Images\GitProject.png" />
+    <Content Include="Images\markdown.png" />
+    <Content Include="Images\Merge.png" />
+    <Content Include="Images\Pull.png" />
+    <Content Include="Images\Pull_old.png" />
+    <Content Include="Images\Green Check.png" />
+    <Content Include="Images\Push.png" />
+    <Content Include="Images\Stage.png" />
+    <Compile Include="UI\Property Grid\Editors\GitNodeListEditor.vb" />
+    <Content Include="Images\Unstage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>
