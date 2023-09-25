@@ -30,16 +30,16 @@ Public Class ScriptingSession : Inherits ScriptObject
         Me.ObjectLibrary = Item
         Me.Root = Item.Root
 
-        Dim projects As ProjectsFolder = Item.Root.Projects
-        Dim ico As Drawing.Image = projects.IconImage
-        Dim currentAllowedTypes As List(Of Type) = projects.AllowedChildTypes.ToList()
+        'Dim projects As ProjectsFolder = Item.Root.Projects
+        'Dim ico As Drawing.Image = projects.IconImage
+        'Dim currentAllowedTypes As List(Of Type) = projects.AllowedChildTypes.ToList()
 
-        If currentAllowedTypes.Any(Function(t) t.FullName = GetType(GitProject).FullName) Then
-            Return True
-        End If
+        'If currentAllowedTypes.Any(Function(t) t.FullName = GetType(GitProject).FullName) Then
+        '    Return True
+        'End If
 
-        currentAllowedTypes.Add(GetType(GitProject))
-        projects.SetAllowedTypes(currentAllowedTypes)
+        'currentAllowedTypes.Add(GetType(GitProject))
+        'projects.SetAllowedTypes(currentAllowedTypes)
 
         Return True
 

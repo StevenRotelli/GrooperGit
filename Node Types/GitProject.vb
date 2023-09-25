@@ -1,3 +1,4 @@
+Imports Grooper.CMIS
 ''' <summary>A Git Project is a library of resources that can be version controlled and managed by other people, and serves as the primary container in which design components are created and organized.</summary>
 ''' <remarks>Project 'resources' are configuration objects created by a designer, which define the connections, data structures, and logic 
 ''' used when processing documents through Grooper. </remarks>
@@ -17,12 +18,13 @@ Public Class GitProject : Inherits Project
         <DataMember> Public gitIgnore As String
         <DataMember> Public README As String
         <DataMember> Public ChangedIds As List(Of Guid)
-        '<DataMember> Public Visibility As String
+        <DataMember> Public RemoteRepository As String
 #End Region
         Public Sub New(Owner As GrooperNode)
             MyBase.New(Owner)
         End Sub
     End Class
+
 #Region "Constructors and Overrides"
 
     Public Sub New(gdb As GrooperDb)
@@ -96,6 +98,7 @@ Public Class GitProject : Inherits Project
             Props.gitIgnore = value : PropsDirty = True
         End Set
     End Property
+
     ''' <summary>A list of internal changes from the current head of the repository to be included.</summary>
     ''' <remarks>Staged changes will not be committed untill manually committed.</remarks>
     <DisplayName("Staged Changes"), RequiresUI, Viewable, UI(GetType(GitNodeListEditor)), TypeConverter(GetType(PgCollectionConverter)), Category("Git")>
@@ -108,6 +111,7 @@ Public Class GitProject : Inherits Project
             PropsDirty = True
         End Set
     End Property
+
     ''' <summary>Manages the README documentation within the specified GitProject.</summary>
     ''' <remarks>
     ''' The README file provides information about the project, its purpose, setup instructions, and other essential details. 
@@ -133,6 +137,23 @@ Public Class GitProject : Inherits Project
 
         End Set
     End Property
+
+
+    <DataMember(Name:="AuthenticationMethod")>
+    Private _AuthenticationMethod As HttpAuthenticationMethod
+
+    ''' <summary>Configures the .gitignore settings for the specified GitProject [Object Command].</summary>
+    ''' <remarks>The .gitignore file specifies intentionally untracked files that Git should ignore. This helps in keeping the repository clean by excluding logs, binaries, and other non-source files. More details can be found <a href="https://git-scm.com/docs/gitignore">here</a>.</remarks>
+    <Viewable, DisplayName("Remote"), Category("Git"), UI(GetType(PgTextEditor))>
+    Public Property RemoteRepository As String
+        Get
+            Return Props.gitIgnore
+        End Get
+        Set(value As String)
+            Props.gitIgnore = value : PropsDirty = True
+        End Set
+    End Property
+
     Private Function IsValidGitURL(ByVal url As String) As Boolean
         Dim result As Uri
         If Uri.TryCreate(url, UriKind.Absolute, result) Then
@@ -140,11 +161,7 @@ Public Class GitProject : Inherits Project
         End If
         Return False
     End Function
-    ''' <summary>
-    ''' Ensures [localRepository] always ends in a / character
-    ''' </summary>
-    ''' <param name="path"></param>
-    ''' <returns></returns>
+
     Private Function SanitizePath(path As String) As String
         If Not path.EndsWith("/") Then Return path + "/"
     End Function

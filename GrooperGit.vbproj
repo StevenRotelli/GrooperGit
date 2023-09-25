@@ -62,6 +62,9 @@
       <HintPath>C:\Program Files\BIS\Grooper\Grooper.Activities.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Grooper.CMIS">
+      <HintPath>..\..\..\..\..\..\..\Program Files\BIS\Grooper\Grooper.CMIS.dll</HintPath>
+    </Reference>
     <Reference Include="Grooper.Core">
       <HintPath>C:\Program Files\BIS\Grooper\Grooper.Core.dll</HintPath>
       <Private>False</Private>
@@ -74,14 +77,28 @@
       <HintPath>C:\Program Files\BIS\Grooper\Grooper.Extract.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.Exchange.WebServices, Version=15.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files\BIS\Grooper\Third Party\Microsoft.Exchange.WebServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Exchange.WebServices.Auth">
+      <HintPath>..\..\..\..\..\..\..\Program Files\BIS\Grooper\Third Party\Microsoft.Exchange.WebServices.Auth.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files\BIS\Grooper\Third Party\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PortCMIS">
+      <HintPath>..\..\..\..\..\..\..\Program Files\BIS\Grooper\PortCMIS.dll</HintPath>
+    </Reference>
+    <Reference Include="Renci.SshNet">
+      <HintPath>..\..\..\..\..\..\..\Program Files\BIS\Grooper\Renci.SshNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -133,6 +150,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RemoteBinding.VB" />
     <Compile Include="UI\Property Grid\Editors\MarkDownEditor.vb" />
     <Compile Include="UI\Property Grid\Type Converters\RepositoryVisibility.vb" />
     <Compile Include="UI\Property Grid\Type Converters\BranchListConverter.vb" />
@@ -182,6 +200,7 @@
     <Content Include="Images\Pull_old.png" />
     <Content Include="Images\Green Check.png" />
     <Content Include="Images\Push.png" />
+    <Content Include="Images\Search.png" />
     <Content Include="Images\Stage.png" />
     <Compile Include="UI\Property Grid\Editors\GitNodeListEditor.vb" />
     <Content Include="Images\Unstage.png" />
