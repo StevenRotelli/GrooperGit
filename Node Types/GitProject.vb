@@ -23,7 +23,6 @@ Public Class GitProject : Inherits Project
             MyBase.New(Owner)
         End Sub
     End Class
-
 #Region "Constructors and Overrides"
 
     Public Sub New(gdb As GrooperDb)

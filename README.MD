@@ -9,7 +9,7 @@
 
 ### Description
 
-This object library is designed to bring the power of Git version control and collaboration features directly to Grooper's Project Node. By integrating with the existing MMC-like tree structure in Grooper, users can seamlessly manage versions, collaborate on changes, and ensure data consistency across the platform.
+This object library is designed to bring the power of Git version control and collaboration features directly to Grooper's Project Node. By integrating with the existing tree structure into a Git Repository, users can seamlessly manage versions, collaborate on changes, and ensure data consistency across the platform.
 
 ### Features
 
@@ -40,11 +40,11 @@ _Note: Detailed usage instructions and screenshots can be found in the included 
 
 ### Support
 
-For support, questions, or feature requests,Steven Rotelli as this is an unoficiall feature enhancement.
+For support, questions, or feature requests, Steven Rotelli as this is an unoficiall feature enhancement.
 
 ### License
 
-This object library is provided under the [Your License Name]. See the `LICENSE` file in the package for full details.
+This object library is provided under the GPL-3 License. See the `LICENSE` file in the package for full details.
 
 ### Changelog
 
