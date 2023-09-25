@@ -11,9 +11,6 @@ Public Class GitProject : Inherits Project
 #Region "NodeProps"
     <DataContract> Public Class GitProject_Properties : Inherits Project_Properties
         <DataMember> Public gitBranch As String
-        '<DataMember> Public gitUser As String
-        '<DataMember> Public PAT As String
-        '<DataMember> Public gitUrl As String
         <DataMember> Public localRepository As String
         <DataMember> Public gitStatus As String
         <DataMember> Public gitChanges As String
@@ -24,7 +21,6 @@ Public Class GitProject : Inherits Project
 #End Region
         Public Sub New(Owner As GrooperNode)
             MyBase.New(Owner)
-            'Dim t As LibGit2Sharp.Repository
         End Sub
     End Class
 
