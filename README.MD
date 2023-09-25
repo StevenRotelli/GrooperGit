@@ -4,7 +4,7 @@
 ## Grooper Git Integration Object Library
 
 **Version:** 1.0.0  
-**Author:** Steven Rotelli s
+**Author:** Steven Rotelli  
 **Date:** TBD
 
 ### Description
