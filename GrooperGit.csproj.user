@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartAction>Program</StartAction>
+    <StartProgram>C:\Program Files\BIS\Grooper\GrooperAdmin.exe</StartProgram>
+    <StartArguments>/Debug=1151ebff-bdef-44e7-8b3c-267475346731 /DebugPath=C:\Users\strotelli\AppData\Local\Temp\GrooperScripts\GrooperGit\bin\Debug\GrooperGit.dll</StartArguments>
+    <StartWorkingDirectory>C:\Program Files\BIS\Grooper</StartWorkingDirectory>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ProjectView>ProjectFiles</ProjectView>
+  </PropertyGroup>
+</Project>

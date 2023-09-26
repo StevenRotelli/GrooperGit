@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1151EBFF-BDEF-44E7-8B3C-267475346731}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GrooperGit</RootNamespace>
+    <AssemblyName>GrooperGit</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>GrooperGit.xml</DocumentationFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>GrooperGit.xml</DocumentationFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Grooper">
+      <HintPath>C:\Program Files\BIS\Grooper\Grooper.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Grooper.Activities">
+      <HintPath>C:\Program Files\BIS\Grooper\Grooper.Activities.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Grooper.Core">
+      <HintPath>C:\Program Files\BIS\Grooper\Grooper.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Grooper.Services">
+      <HintPath>C:\Program Files\BIS\Grooper\Grooper.Services.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Grooper.Extract">
+      <HintPath>C:\Program Files\BIS\Grooper\Grooper.Extract.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FileManager.cs" />
+    <Compile Include="GitObject.cs" />
+    <Compile Include="GitProject.cs" />
+    <Compile Include="Object Commands\ConvertToGitProject.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptingSession.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\BlueCheck.png" />
+    <Content Include="Images\Branch.png" />
+    <Content Include="Images\Commit.png" />
+    <Content Include="Images\Diff.png" />
+    <Content Include="Images\Fetch.png" />
+    <Content Include="Images\Fetch_old.png" />
+    <Content Include="Images\Git.png" />
+    <Content Include="Images\GitProject.png" />
+    <Content Include="Images\Green Check.png" />
+    <Content Include="Images\GrooperGit.png" />
+    <Content Include="Images\GrooperGitProject.png" />
+    <Content Include="Images\markdown.png" />
+    <Content Include="Images\Merge.png" />
+    <Content Include="Images\Pull.png" />
+    <Content Include="Images\Pull_old.png" />
+    <Content Include="Images\Push.png" />
+    <Content Include="Images\Search.png" />
+    <Content Include="Images\Stage.png" />
+    <Content Include="Images\Unstage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Node Types\" />
+    <Folder Include="UI\PropertyGrid\Type Converters\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
