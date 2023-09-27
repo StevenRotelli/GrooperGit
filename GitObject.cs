@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class GitObject
 {
     private string _cwd;

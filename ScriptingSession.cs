@@ -28,7 +28,8 @@ using Grooper.Services;
 /// </remarks>
 namespace GrooperGit
 {
-    #pragma warning disable 1591
+
+#pragma warning disable 1591
     public class ScriptingSession : ScriptObject
   {
     private ObjectLibrary ObjectLibrary;

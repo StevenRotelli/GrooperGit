@@ -1,11 +1,9 @@
 using Grooper;
-using Grooper.Core;
 using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
-// Additional namespaces might be needed
-
+using static Grooper.GlobalCode;
 /// <summary>
 /// Executes a publish to git, and creates a git repository on a Project [Object Command].
 /// </summary>
@@ -17,6 +15,8 @@ using System.Runtime.Serialization;
 [IconResource("Git")]
 [DisplayName("Publish to Git Repository")]
 [Category("Share")]
+
+#pragma warning disable 1591 
 public class ConverToGitProject : ObjectCommand<Project>
 {
     [DataMember]
@@ -45,16 +45,16 @@ public class ConverToGitProject : ObjectCommand<Project>
         item.Database.PurgeCache();
         item.Database.ResetCache();
 
-        GitProject projectNode = this.Database.GetNode(item.Id);
-        var projectNodeProperties = projectNode.NodeProps; // Assuming NodeProps is a known property in GitProject
+        GitProject projectNode = (GitProject)Database.GetNode(item.Id);
+        //GitProject.GrooperNode_Properties projectNodeProperties = (GitProject.GrooperNode_Properties)projectNode.prop; 
+        
+        projectNode.localRepository = LocalRepository;
+        projectNode.localBranch = "* master";
+        projectNode.README = $"# {item.Name}";
+        projectNode.gitIgnore = $"*.jpg{Environment.NewLine}";
 
-        projectNodeProperties.LocalRepository = LocalRepository;
-        projectNodeProperties.GitBranch = "* master";
-        projectNodeProperties.README = $"# {item.Name}";
-        projectNodeProperties.GitIgnore = $"*.jpg{Environment.NewLine}";
-
-        string json = CleanSql(ObjectSerializer.ToJson(projectNodeProperties));
-        Database.ExecuteScalar($"UPDATE TreeNode SET Properties=N'{json}' OUTPUT Inserted.RowVersion WHERE Id='{item.Id}'");
+        //string json = GlobalCode.CleanSql(ObjectSerializer.ToJson(projectNode.PropertiesJson));
+        //Database.ExecuteScalar($"UPDATE TreeNode SET Properties=N'{json}' OUTPUT Inserted.RowVersion WHERE Id='{item.Id}'");
 
         var gitConsole = new GitObject(LocalRepository);
         gitConsole.Init();

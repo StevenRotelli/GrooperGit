@@ -17,7 +17,8 @@ public class FileManager
     {
         if (grooperNode.TypeDisplayName == "GitProject")
         {
-            var gitProject = grooperNode as GitProject;
+            var gitProject = (GitProject)grooperNode;
+            
             if (string.IsNullOrEmpty(gitProject?.localRepository)) return;
 
             var gitConsole = new GitObject(gitProject.localRepository);

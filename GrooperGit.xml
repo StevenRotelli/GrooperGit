@@ -1,108 +1,66 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>GrooperGitCS</name>
+        <name>GrooperGit</name>
     </assembly>
     <members>
-        <member name="T:GrooperGitCS.Properties.Resources">
+        <member name="T:FileManager">
+            <summary>
+            A Class to maintain a file abstract of the Grooper Tree Under the git project in order to leverage GIT commands against the Grooper Nodes.
+            </summary>
+            <remarks>
+            This is because Grooper Nodes aren't files and need to be able to detect differences as files and compare differences as files.
+            </remarks>
+        </member>
+        <member name="M:FileManager.SyncProject(Grooper.GrooperNode)">
+            <summary>
+            Syncs the active node settings of all children in the project and marks their appropriate GitStatus.
+            </summary>
+            <param name="grooperNode">The GrooperNode to be synced.</param>
+        </member>
+        <member name="T:GitProject">
+            <summary>
+            A Git Project is a library of resources that can be version controlled and managed by other people.
+            It serves as the primary container in which design components are created and organized.
+            </summary>
+            <remarks>
+            Project 'resources' are configuration objects created by a designer, 
+            which define the connections, data structures, and logic used when processing documents through Grooper.
+            </remarks>
+        </member>
+        <member name="P:GitProject.localRepository">
+            <summary>Represents the local path of the Git repository associated with the Grooper Project.</summary>
+            <remarks>The repository URL points to the location where the Git project is hosted. Developers can use this URL to clone, fetch, or push changes to the repository. It's an essential link for collaboration and code management.</remarks>
+        </member>
+        <member name="T:ConverToGitProject">
+            <summary>
+            Executes a publish to git, and creates a git repository on a Project [Object Command].
+            </summary>
+            <remarks>
+            Transforms the node type from Project to GitProject, and begins a repository connection.
+            <a href="https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository">More info</a>.
+            </remarks>
+        </member>
+        <member name="M:ConverToGitProject.Execute(Grooper.Project)">
+            <summary>
+            Code that will be executed when the [Object Command] is executed.
+            </summary>
+            <param name="item">The Grooper object that the command will execute against.</param>
+        </member>
+        <member name="T:GrooperGit.Properties.Resources">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
             </summary>
         </member>
-        <member name="P:GrooperGitCS.Properties.Resources.ResourceManager">
+        <member name="P:GrooperGit.Properties.Resources.ResourceManager">
             <summary>
               Returns the cached ResourceManager instance used by this class.
             </summary>
         </member>
-        <member name="P:GrooperGitCS.Properties.Resources.Culture">
+        <member name="P:GrooperGit.Properties.Resources.Culture">
             <summary>
               Overrides the current thread's CurrentUICulture property for all
               resource lookups using this strongly typed resource class.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.BlueCheck">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.Branch">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.Commit">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.Diff">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.Fetch">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.Fetch_old">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.Git">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.GitProject">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.Green_Check">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.markdown">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.Merge">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.Pull">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.Pull_old">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.Push">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.Search">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.Stage">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:GrooperGitCS.Properties.Resources.Unstage">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
             </summary>
         </member>
     </members>

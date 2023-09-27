@@ -1,2 +1,9 @@
 D:\GrooperGit\obj\Debug\GrooperGit.csproj.AssemblyReference.cache
 D:\GrooperGit\obj\Debug\GrooperGit.csproj.GenerateResource.cache
+D:\GrooperGit\obj\Debug\GrooperGit.Properties.Resources.resources
+D:\GrooperGit\obj\Debug\GrooperGit.csproj.CoreCompileInputs.cache
+D:\GrooperGit\bin\Debug\GrooperGit.dll
+D:\GrooperGit\bin\Debug\GrooperGit.pdb
+D:\GrooperGit\bin\Debug\GrooperGit.xml
+D:\GrooperGit\obj\Debug\GrooperGit.dll
+D:\GrooperGit\obj\Debug\GrooperGit.pdb

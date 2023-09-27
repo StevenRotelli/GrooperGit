@@ -69,7 +69,6 @@
     <Compile Include="FileManager.cs" />
     <Compile Include="GitObject.cs" />
     <Compile Include="GitProject.cs" />
-    <Compile Include="Images\Class1.cs" />
     <Compile Include="Object Commands\ConvertToGitProject.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
