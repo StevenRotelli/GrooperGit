@@ -47,14 +47,14 @@ namespace GrooperGit
             //GitProject.GrooperNode_Properties projectNodeProperties = (GitProject.GrooperNode_Properties)projectNode.prop; 
 
             projectNode.localRepository = LocalRepository;
-            projectNode.localBranch = "* master";
+            //projectNode.localBranch = "* master";
             projectNode.README = $"# {item.Name}";
             projectNode.gitIgnore = $"*.jpg{Environment.NewLine}";
 
             //string json = GlobalCode.CleanSql(ObjectSerializer.ToJson(projectNode.PropertiesJson));
             //Database.ExecuteScalar($"UPDATE TreeNode SET Properties=N'{json}' OUTPUT Inserted.RowVersion WHERE Id='{item.Id}'");
 
-            var gitConsole = new GitObject(LocalRepository);
+            var gitConsole = new GitShell(LocalRepository);
             gitConsole.Init();
 
             FileManager.NodeToFile(projectNode);
@@ -72,5 +72,6 @@ namespace GrooperGit
             if (item.TypeName.Contains("GitProject")) return false;
             return true;
         }
+
     }
 }

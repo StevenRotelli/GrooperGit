@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -66,10 +67,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileManager.cs" />
-    <Compile Include="GitObject.cs" />
-    <Compile Include="GitProject.cs" />
+    <Compile Include="Classes\FileManager.cs" />
+    <Compile Include="Classes\GitRepository.cs" />
+    <Compile Include="Classes\GitShell.cs" />
+    <Compile Include="Node Types\GitProject.cs" />
     <Compile Include="Object Commands\ConvertToGitProject.cs" />
+    <Compile Include="Object Commands\GitCommand.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -82,6 +85,9 @@
     </Compile>
     <Compile Include="ScriptingSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Property Grid\Editors\ChangedNodeListEditor.cs" />
+    <Compile Include="UI\Property Grid\Editors\MarkDownEditor.cs" />
+    <Compile Include="UI\Property Grid\Type Converters\BranchListConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\BlueCheck.png" />
@@ -110,11 +116,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Node Types\" />
-    <Folder Include="UI\PropertyGrid\Editors\" />
-    <Folder Include="UI\PropertyGrid\Type Converters\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

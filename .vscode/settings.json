@@ -1,0 +1,10 @@
+{
+    "omnisharp.autoStart": false,
+    "omnisharp.enableAsyncCompletion": false, 
+
+    "csharp.languageServerPort": 8080,
+    "dotnet.server.useOmnisharp": true,
+    "omnisharp.enableLspDriver": true,
+    "omnisharp.enableMsBuildLoadProjectsOnDemand": false,
+    "dotnet.server.path": "",
+}

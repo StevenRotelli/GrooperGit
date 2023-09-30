@@ -22,7 +22,7 @@ namespace GrooperGit
 
                 if (string.IsNullOrEmpty(gitProject?.localRepository)) return;
 
-                var gitConsole = new GitObject(gitProject.localRepository);
+                var gitConsole = new GitShell(gitProject.localRepository);
                 foreach (var node in gitProject.AllChildren)
                 {
                     if (!File.Exists(""))
@@ -34,7 +34,6 @@ namespace GrooperGit
                 }
             }
         }
-
         public static void NodeToFile(object obj)
         {
             if (obj is GitProject)
