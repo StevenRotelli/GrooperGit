@@ -18,7 +18,7 @@ namespace GrooperGit
         {
             if (Instance == null)  return new List<string>(); 
 
-            GitShell gitShell = new GitShell(Instance.localRepository);
+            GitShell gitShell = new GitShell(Instance.LocalRepository);
             return gitShell.ListBranches();
         }
     }

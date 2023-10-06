@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -23,6 +23,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x64</PlatformTarget>
+    <CustomCommands>
+      <CustomCommands>
+        <Command>
+          <type>AfterBuild</type>
+          <command>../../../debug.sh</command>
+          <externalConsole>True</externalConsole>
+          <pauseExternalConsole>True</pauseExternalConsole>
+        </Command>
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -33,25 +43,29 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <GrooperPath Condition="'$(OS)' == 'Windows_NT'">C:\Program Files\BIS\Grooper\</GrooperPath>
+    <GrooperPath Condition="'$(OS)' != 'Windows_NT'">/Users/stevenrotelli/Grooper/</GrooperPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Grooper">
-      <HintPath>C:\Program Files\BIS\Grooper\Grooper.dll</HintPath>
+      <HintPath>$(GrooperPath)Grooper.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Grooper.Activities">
-      <HintPath>C:\Program Files\BIS\Grooper\Grooper.Activities.dll</HintPath>
+      <HintPath>$(GrooperPath)Grooper.Activities.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Grooper.Core">
-      <HintPath>C:\Program Files\BIS\Grooper\Grooper.Core.dll</HintPath>
+      <HintPath>$(GrooperPath)Grooper.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Grooper.Services">
-      <HintPath>C:\Program Files\BIS\Grooper\Grooper.Services.dll</HintPath>
+      <HintPath>$(GrooperPath)Grooper.Services.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Grooper.Extract">
-      <HintPath>C:\Program Files\BIS\Grooper\Grooper.Extract.dll</HintPath>
+      <HintPath>$(GrooperPath)Grooper.Extract.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -88,6 +102,8 @@
     <Compile Include="UI\Property Grid\Editors\ChangedNodeListEditor.cs" />
     <Compile Include="UI\Property Grid\Editors\MarkDownEditor.cs" />
     <Compile Include="UI\Property Grid\Type Converters\BranchListConverter.cs" />
+    <Compile Include="Object Commands\Stage.cs" />
+    <Compile Include="Object Commands\Commit.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\BlueCheck.png" />
@@ -124,4 +140,13 @@
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <DotNetNamingPolicy ResourceNamePolicy="FileFormatDefault" DirectoryNamespaceAssociation="PrefixedHierarchical" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>

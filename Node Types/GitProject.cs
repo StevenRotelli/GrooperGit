@@ -1,11 +1,9 @@
 using Grooper;
-using Grooper.Extract;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Runtime.Serialization;
-using static Grooper.Core.BatchProcess;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 namespace GrooperGit
@@ -30,8 +28,8 @@ namespace GrooperGit
         public class GitProject_Properties : Project_Properties
         {
             [DataMember] public GitRepository Repository { get; set; }
-            [DataMember] public string gitStatus { get; set; }
-            [DataMember] public string localRepository { get; set; }
+            [DataMember] public string GitStatus { get; set; }
+            [DataMember] public string LocalRepository { get; set; }
             [DataMember] public string gitChanges { get; set; }
             [DataMember] public string gitIgnore { get; set; }
             [DataMember] public string README { get; set; }
@@ -63,9 +61,9 @@ namespace GrooperGit
             get => Props.gitIgnore; set { Props.gitIgnore = value; PropsDirty = true; }
         }
         [DataMember, Viewable, DisplayName("gitignore"), UI(typeof(PgTextEditor)), Category("Git")]
-        public string localRepository 
+        public string LocalRepository
         {
-            get => Props.localRepository; set { Props.localRepository = value; PropsDirty = true; }
+            get => Props.LocalRepository; set { Props.LocalRepository = value; PropsDirty = true; }
         }
         
         [DataMember, Viewable,DisplayName("Repo"),TypeConverter(typeof(ExpandableConverter)) ,Category("Git")]
@@ -86,6 +84,13 @@ namespace GrooperGit
         public string README
         {
             get => Props.README; set { Props.README = value; PropsDirty = true; }
+        }
+
+        [DataMember, Viewable, RequiresUI, UI(typeof(ChangedNodeListEditor)), TypeConverter(typeof(PgCollectionConverter))]
+        public List<GrooperNode> ChangedNodes
+        {
+            get => Database.GetNodes<GrooperNode>(Props.ChangedIds);
+            set { Props.ChangedIds = new List<Guid>(value.Where(Item => Item.Id != Id).Select(Item => Item.Id)); PropsDirty = true; }
         }
         public override ValidationErrorList ValidateProperties()
         {

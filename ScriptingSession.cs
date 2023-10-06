@@ -16,29 +16,21 @@ namespace GrooperGit
     private GrooperRoot Root;
     public override bool Initialize(GrooperNode Item)
     {
-            ObjectLibrary = (ObjectLibrary)Item;
-            Root = Item.Root;
-            ProjectsFolder projectsFolder = Root.Projects;
-            List<Type> allowedTypes = projectsFolder.AllowedChildTypes.ToList<Type>();
+            #region override allowed types
+            //ObjectLibrary = (ObjectLibrary)Item;
+            //Root = Item.Root;
+            //ProjectsFolder projectsFolder = Root.Projects;
+            //List<Type> allowedTypes = projectsFolder.AllowedChildTypes.ToList<Type>();
             
-            if (allowedTypes.Any(t => t.FullName == typeof(GitProject).FullName)){ return true; }
-            allowedTypes.Add(typeof(GitProject));
-            projectsFolder.SetAllowedTypes(allowedTypes);
-
+            //if (allowedTypes.Any(t => t.FullName == typeof(GitProject).FullName)){ return true; }
+            //allowedTypes.Add(typeof(GitProject));
+            //projectsFolder.SetAllowedTypes(allowedTypes);
+            #endregion
             return true;
     }
 
     public override bool Uninitialize()
     {
-            
-            ProjectsFolder projectsFolder = Root.Projects;
-            List<Type> allowedTypes = projectsFolder.AllowedChildTypes.ToList<Type>();
-
-            if (!allowedTypes.Any(t => t.FullName == typeof(GitProject).FullName)) { return true; }
-            allowedTypes.Remove(typeof(GitProject));
-            projectsFolder.SetAllowedTypes(allowedTypes);
-
-
             return true;
     }
   }

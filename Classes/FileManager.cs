@@ -20,9 +20,9 @@ namespace GrooperGit
             {
                 var gitProject = (GitProject)grooperNode;
 
-                if (string.IsNullOrEmpty(gitProject?.localRepository)) return;
+                if (string.IsNullOrEmpty(gitProject?.LocalRepository)) return;
 
-                var gitConsole = new GitShell(gitProject.localRepository);
+                var gitConsole = new GitShell(gitProject.LocalRepository);
                 foreach (var node in gitProject.AllChildren)
                 {
                     if (!File.Exists(""))
@@ -39,13 +39,13 @@ namespace GrooperGit
             if (obj is GitProject)
             {
                 var node = obj as GitProject;
-                File.WriteAllLines(Path.Combine(node.localRepository, node.Id + ".json"), node.PropertiesJson.Split('\n'));
+                File.WriteAllLines(Path.Combine(node.LocalRepository, node.Id + ".json"), node.PropertiesJson.Split('\n'));
             }
             else
             {
                 var node = obj as GrooperNode;
                 var parentNode = node.ParentProject as GitProject;
-                File.WriteAllLines(Path.Combine(parentNode.localRepository, node.Id + ".json"), node.PropertiesJson.Split('\n'));
+                File.WriteAllLines(Path.Combine(parentNode.LocalRepository, node.Id + ".json"), node.PropertiesJson.Split('\n'));
             }
         }
     }

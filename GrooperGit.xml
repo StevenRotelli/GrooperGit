@@ -26,9 +26,17 @@
         <member name="M:GrooperGit.GitRepository.#ctor(Grooper.ConnectedObject)">
             <inheritdoc/>
         </member>
+        <member name="P:GrooperGit.GitRepository.localPath">
+            <summary>Represents the location of the local Git repository</summary>
+            <remarks>The path is also where the required Git CLI runs</remarks>
+        </member>
         <member name="P:GrooperGit.GitRepository.localRepository">
             <summary>Represents the local path of the Git repository associated with the Grooper Project.</summary>
             <remarks>The repository URL points to the location where the Git project is hosted. Developers can use this URL to clone, fetch, or push changes to the repository. It's an essential link for collaboration and code management.</remarks>
+        </member>
+        <member name="P:GrooperGit.GitRepository.localBranch">
+            <summary>Manages Git branches within the specified GitProject.</summary>
+            <remarks>Git branches allow developers to work on features or fixes in isolation, without affecting the main or other development lines. This ensures code stability and streamlined collaboration. More details can be found <a href="https://git-scm.com/docs/git-branch">here</a>.</remarks>
         </member>
         <member name="P:GrooperGit.GitRepository.remoteRepository">
             <summary>Represents the remote path of the Git repository associated with the Grooper Project.</summary>
@@ -74,8 +82,8 @@
             <param name="item">The Grooper object that the command will execute against.</param>
         </member>
         <member name="T:GrooperGit.GitCommand">
-            <summary>Template for a custom [Object Command].</summary>
-            <remarks>"Type" should be replaced with the type of object the command will be executed against.</remarks>
+            <summary>Template for a custom for ObjectCommands under GitProject.</summary>
+            <remarks>This abstract is here to minimize code rewrites for allowed exection.</remarks>
         </member>
         <member name="T:GrooperGit.Properties.Resources">
             <summary>
@@ -185,6 +193,10 @@
         </member>
         <member name="M:GrooperGit.BranchListConverter.GetListItems(GrooperGit.GitProject,System.ComponentModel.PropertyDescriptor)">
             <inheritdoc/>
+        </member>
+        <member name="T:GrooperGit.Stage">
+            <summary>Executes a Git Stage operation, preparing changes for commit in the specified GitProject [Object Command].</summary>
+            <remarks>Git Staging allows you to prepare changes for a commit, helping you organize modifications and facilitating code review. Learn more about Git Staging <a href="https://git-scm.com/docs/git-stage">here</a>.</remarks>
         </member>
     </members>
 </doc>

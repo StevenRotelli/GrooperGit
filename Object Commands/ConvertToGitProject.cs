@@ -4,7 +4,8 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
 using static Grooper.GlobalCode;
-#pragma warning disable 1591 
+#pragma warning disable 1591
+
 namespace GrooperGit
 {
     /// <summary>
@@ -17,13 +18,10 @@ namespace GrooperGit
     [DataContract, IconResource("Git"), DisplayName("Publish to Git Repository"), Category("Share")]
     public class ConverToGitProject : ObjectCommand<Project>
     {
-        [DataMember]
-        [DefaultValue(@"C:\GitRepositories\")]
+        [DataMember, DefaultValue("C:\\GitRepositories\\")]
         public string LocalRepository { get; set; }
 
-        [DisplayName("Local Repository")]
-        [Required]
-        [Viewable]
+        [DisplayName("Local Repository"), Required, Viewable]
         public string _LocalRepository
         {
             get { return LocalRepository; }
@@ -46,7 +44,7 @@ namespace GrooperGit
             GitProject projectNode = (GitProject)Database.GetNode(item.Id);
             //GitProject.GrooperNode_Properties projectNodeProperties = (GitProject.GrooperNode_Properties)projectNode.prop; 
 
-            projectNode.localRepository = LocalRepository;
+            projectNode.LocalRepository = LocalRepository;
             //projectNode.localBranch = "* master";
             projectNode.README = $"# {item.Name}";
             projectNode.gitIgnore = $"*.jpg{Environment.NewLine}";

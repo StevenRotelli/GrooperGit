@@ -1,24 +1,31 @@
 ﻿using Grooper;
 using System;
-
-//TODO:  See Custom Object Commands in Grooper x Change for more information:  https://xchange.grooper.com/discussion/777/custom-object-command#latest
+using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace GrooperGit
 {
-    /// <summary>Template for a custom [Object Command].</summary>
-    /// <remarks>"Type" should be replaced with the type of object the command will be executed against.</remarks>
-    public class Commit : ObjectCommand<Type> // TODO:  Replace Type with a Grooper Object
+    ///<summary>Executes a Git Commit operation on the specified GitProject [Object Command].</summary>
+    ///<remarks>A Git Commit captures changes to files in the project, allowing for tracking
+    ///of modifications and collaboration with other contributors. More details can be found <a href="https://git-scm.com/docs/git-commit">here</a>.</remarks>
+    [DataContract, IconResource("Commit"), Category("Git")]
+    public class Commit : ObjectCommand<GitProject>
     {
+        public string _CommitMessage;
 
-        /// <summary>Code that will be executed when the [Object Command] is executed.</summary>
-        /// <param name="Item">The Grooper object that the command will execute against.</param>
-        protected override void Execute(Type Item) // TODO:  Replace Type with a Grooper Object
+        [DisplayName("Commit Mesage"), Required, Viewable]
+        public string CommitMessage
         {
-            throw new NotImplementedException();
-            // TODO:  Write code to execute on the Item
+            get { return _CommitMessage; }
+            set { _CommitMessage = value; }
+        }
+        protected override void Execute(GitProject Item)
+        {
+            Item.Repository.Commit(_CommitMessage);
         }
         protected override bool CanExecute(GitProject Item)
         {
+            if (Item.ChangedNodes.Count == 0) return true;
             return true; 
         }
     }
