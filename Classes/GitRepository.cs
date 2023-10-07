@@ -1,14 +1,8 @@
 ﻿using System;
 using Grooper;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.Serialization;
-using System.Security.Policy;
 using System.Diagnostics;
 
 namespace GrooperGit
@@ -68,9 +62,15 @@ namespace GrooperGit
         public string RemoteBranch { get; set; }
 
         #region Methods
+
+        public void AddRemote()
+        {
+          BaseCommand($"git remote add ");
+        }
+
         public void Init()
         {
-            BaseCommand();
+            BaseCommand($"init ");
         }
 
         public void Add(string fileName)
@@ -78,9 +78,12 @@ namespace GrooperGit
             BaseCommand($"add '{fileName}'");
         }
 
-
-        public void Remove(string fileName)
+        public void Remove(List<GrooperNode> Items)
         {
+          foreach(GrooperNode node in Items)
+          {
+          
+          }
             BaseCommand($"remove '{fileName}'");
         }
 
@@ -93,6 +96,7 @@ namespace GrooperGit
         {
             BaseCommand($"push '{branch}' '{remote}' {arguments}");
         }
+
         #endregion
 
         /// <summary>

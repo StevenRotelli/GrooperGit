@@ -104,6 +104,7 @@
     <Compile Include="UI\Property Grid\Type Converters\BranchListConverter.cs" />
     <Compile Include="Object Commands\Stage.cs" />
     <Compile Include="Object Commands\Commit.cs" />
+    <Compile Include="Object Commands\Remove.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\BlueCheck.png" />
