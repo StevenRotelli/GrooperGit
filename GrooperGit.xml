@@ -45,12 +45,12 @@
         <member name="M:GrooperGit.GitRepository.ValidateProperties">
             <inheritdoc/>
         </member>
-        <member name="T:GrooperGit.GitShell">
+        <member name="T:GrooperGit.Shell">
             <summary>
             An abstract for running git CLI commmands through powershell. 
             </summary>
         </member>
-        <member name="M:GrooperGit.GitShell.#ctor(System.String)">
+        <member name="M:GrooperGit.Shell.#ctor(System.String)">
             <summary>
             Contsctructor
             </summary>

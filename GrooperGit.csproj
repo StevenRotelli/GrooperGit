@@ -83,7 +83,8 @@
   <ItemGroup>
     <Compile Include="Classes\FileManager.cs" />
     <Compile Include="Classes\GitRepository.cs" />
-    <Compile Include="Classes\GitShell.cs" />
+    <Compile Include="Classes\Shell.cs" />
+    <Compile Include="Classes\NodeAsFile.cs" />
     <Compile Include="Node Types\GitProject.cs" />
     <Compile Include="Object Commands\ConvertToGitProject.cs" />
     <Compile Include="Object Commands\GitCommand.cs" />

@@ -60,11 +60,6 @@ namespace GrooperGit
         {
             get => Props.gitIgnore; set { Props.gitIgnore = value; PropsDirty = true; }
         }
-        [DataMember, Viewable, DisplayName("gitignore"), UI(typeof(PgTextEditor)), Category("Git")]
-        public string LocalRepository
-        {
-            get => Props.LocalRepository; set { Props.LocalRepository = value; PropsDirty = true; }
-        }
         
         [DataMember, Viewable,DisplayName("Repo"),TypeConverter(typeof(ExpandableConverter)) ,Category("Git")]
         public GitRepository Repository
@@ -83,7 +78,25 @@ namespace GrooperGit
         [DataMember, Viewable, DisplayName("README"), UI(typeof(MarkDownEditor)), Category("Git")]
         public string README
         {
-            get => Props.README; set { Props.README = value; PropsDirty = true; }
+            get 
+            {
+                var allResourceFiles = this.get_AllChildrenOfType(typeof(ResourceFile));
+                ResourceFile readmeFile = (ResourceFile)allResourceFiles.FirstOrDefault(rf => rf.Name.Equals("README.MD", StringComparison.OrdinalIgnoreCase));
+                if (readmeFile != null) return readmeFile.ReadAsText(); 
+                return "";
+            } 
+            set 
+            { 
+                var allResourceFiles = this.get_AllChildrenOfType(typeof(ResourceFile));
+                ResourceFile readmeFile = (ResourceFile)allResourceFiles.FirstOrDefault(rf => rf.Name.Equals("README.MD", StringComparison.OrdinalIgnoreCase));
+                if (readmeFile == null)
+                {
+                    readmeFile = new ResourceFile(this.Database);
+                    this.AppendNode(readmeFile);
+                    readmeFile.SaveTextFile("README.MD", value, true);
+                }
+                readmeFile.SaveTextFile("README.MD", value, true); PropsDirty = true; 
+            }
         }
 
         [DataMember, Viewable, RequiresUI, UI(typeof(ChangedNodeListEditor)), TypeConverter(typeof(PgCollectionConverter))]
