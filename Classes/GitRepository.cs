@@ -60,6 +60,7 @@ namespace GrooperGit
 
         #region Methods
 
+        ///<summary>test</summary>
         public void AddRemote()
         {
           BaseCommand($"git remote add ");
