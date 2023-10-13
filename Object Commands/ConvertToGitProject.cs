@@ -47,7 +47,7 @@ namespace GrooperGit
             projectNode.LocalRepository = LocalRepository;
             //projectNode.localBranch = "* master";
             projectNode.README = $"# {item.Name}";
-            projectNode.gitIgnore = $"*.jpg{Environment.NewLine}";
+            projectNode.GitIgnore = $"*.jpg{Environment.NewLine}";
 
             //string json = GlobalCode.CleanSql(ObjectSerializer.ToJson(projectNode.PropertiesJson));
             //Database.ExecuteScalar($"UPDATE TreeNode SET Properties=N'{json}' OUTPUT Inserted.RowVersion WHERE Id='{item.Id}'");

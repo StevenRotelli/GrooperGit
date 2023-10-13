@@ -1,18 +1,16 @@
 using Grooper;
-using System;
 using System.IO;
 using System.Collections.Generic;
 
 namespace GrooperGit
 {
-    class NodeAsFile     
+    class NodeAsFile //TODO I have no idea what is going on here
     {
-        public string Path; 
+        public string Path;
         public string PropertiesJson;
         public List<string> FileNames;
         public List<DirectoryInfo> Files;
-        public GitProject ParentProject; 
-        
+        public GitProject ParentProject;
         public NodeAsFile(GrooperNode owner)
         {
             ParentProject = (GitProject)owner.ParentProject;
@@ -27,7 +25,7 @@ namespace GrooperGit
             string pathString = "";
             do
             {
-                pathString = curNode.Name + "\\" + pathString; 
+                pathString = curNode.Name + "\\" + pathString;
                 curNode = curNode.ParentNode;
             } while (curNode.GetType() != typeof(Project));
             return pathString;

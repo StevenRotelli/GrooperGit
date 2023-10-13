@@ -18,6 +18,7 @@ namespace GrooperGit
     /// </remarks>
     [Category("Miscellaneous"), IconResource("Git"), HomeFolder("Projects"), SettingsType(typeof(GitProject.GitProject_Properties))]
     [ChildTypes(typeof(ProjectResourceAttribute), typeof(Folder))]
+
     public class GitProject : Project
     {
         private GitProject_Properties Props => (GitProject_Properties)NodeProps;
@@ -30,11 +31,11 @@ namespace GrooperGit
             [DataMember] public GitRepository Repository { get; set; }
             [DataMember] public string GitStatus { get; set; }
             [DataMember] public string LocalRepository { get; set; }
-            [DataMember] public string gitChanges { get; set; }
-            [DataMember] public string gitIgnore { get; set; }
+            [DataMember] public string GitChanges { get; set; }
+            [DataMember] public string GitIgnore { get; set; }
             [DataMember] public string README { get; set; }
             [DataMember] public List<Guid> ChangedIds { get; set; }
-            [DataMember] public string RemoteRepository { get; set; }
+            [DataMember] public string RemoteURL { get; set; }
 
             public GitProject_Properties(GrooperNode owner) : base(owner) { }
         }
@@ -56,11 +57,19 @@ namespace GrooperGit
         #endregion
 
         [DataMember, Viewable, DisplayName("gitignore"), UI(typeof(PgTextEditor)), Category("Git")]
-        public string gitIgnore
+        public string GitIgnore
         {
-            get => Props.gitIgnore; set { Props.gitIgnore = value; PropsDirty = true; }
+            get => Props.GitIgnore; set { Props.GitIgnore = value; PropsDirty = true; }
         }
         
+        /// <summary>Implements <a target="_blank" href="https://en.wikipedia.org/wiki/OAuth">OAuth Authentication</a> as defined in 
+        /// <a target="_blank" href="https://oauth.net/2/">OAuth 2.0</a>.</summary>
+        [DataMember, Viewable, DisplayName("Remote URL"), DV("https://github.com/")]
+        public string RemoteURL
+        {
+            get => Props.RemoteURL; set {Props.RemoteURL = value; PropsDirty = true; }
+        }
+
         [DataMember, Viewable,DisplayName("Repo"),TypeConverter(typeof(ExpandableConverter)) ,Category("Git")]
         public GitRepository Repository
         {
@@ -70,23 +79,30 @@ namespace GrooperGit
                 {
                     Props.Repository = new GitRepository(this);
                 }
-                return Props.Repository; 
+                return Props.Repository;
             } 
             set { Props.Repository = value; PropsDirty = true; }
 
         }
+
+        // [DataContract, DisplayName("GitHub OAuth")]
+        // public class OtherRepo : GitHubOauth
+        // {
+        //     protected override string Resource => "https://api.github.com/login/"; 
+        // }
+        //
         [DataMember, Viewable, DisplayName("README"), UI(typeof(MarkDownEditor)), Category("Git")]
         public string README
         {
-            get 
+            get
             {
                 var allResourceFiles = this.get_AllChildrenOfType(typeof(ResourceFile));
                 ResourceFile readmeFile = (ResourceFile)allResourceFiles.FirstOrDefault(rf => rf.Name.Equals("README.MD", StringComparison.OrdinalIgnoreCase));
-                if (readmeFile != null) return readmeFile.ReadAsText(); 
-                return "";
-            } 
-            set 
-            { 
+                if (readmeFile != null) return readmeFile.ReadAsText();
+                return readmeFile.ReadAsText();
+            }
+            set
+            {
                 var allResourceFiles = this.get_AllChildrenOfType(typeof(ResourceFile));
                 ResourceFile readmeFile = (ResourceFile)allResourceFiles.FirstOrDefault(rf => rf.Name.Equals("README.MD", StringComparison.OrdinalIgnoreCase));
                 if (readmeFile == null)
