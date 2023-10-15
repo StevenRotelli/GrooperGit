@@ -11,22 +11,27 @@ namespace GrooperGit
     [DataContract, IconResource("Commit"), Category("Git")]
     public class Commit : ObjectCommand<GitProject>
     {
-        public string _CommitMessage;
+        private string _CommitMessage;
 
+        ///<inheritdoc/>
         [DisplayName("Commit Mesage"), Required, Viewable]
         public string CommitMessage
         {
-            get { return _CommitMessage; }
-            set { _CommitMessage = value; }
+            get => _CommitMessage;
+            set => _CommitMessage = value;
         }
+
+        ///<summary></summary>
+        ///<remarks></remarks>
         protected override void Execute(GitProject Item)
         {
             Item.Repository.Commit(_CommitMessage);
         }
+
+        ///<summary>Will not execute if there are no staged changes.</summary>
         protected override bool CanExecute(GitProject Item)
         {
-            if (Item.ChangedNodes.Count == 0) return true;
-            return true; 
+            return Item.ChangedNodes.Count != 0;
         }
     }
 }

@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning disable CS1591
 namespace GrooperGit
 {
     /// <summary>
@@ -16,7 +16,7 @@ namespace GrooperGit
     /// Project 'resources' are configuration objects created by a designer, 
     /// which define the connections, data structures, and logic used when processing documents through Grooper.
     /// </remarks>
-    [Category("Miscellaneous"), IconResource("Git"), HomeFolder("Projects"), SettingsType(typeof(GitProject.GitProject_Properties))]
+    [Category("Miscellaneous"), IconResource("Git"), HomeFolder("Projects"), SettingsType(typeof(GitProject_Properties))]
     [ChildTypes(typeof(ProjectResourceAttribute), typeof(Folder))]
 
     public class GitProject : Project
@@ -30,7 +30,7 @@ namespace GrooperGit
         {
             [DataMember] public GitRepository Repository { get; set; }
             [DataMember] public string GitStatus { get; set; }
-            [DataMember] public string LocalRepository { get; set; }
+            [DataMember] public string LocalPath { get; set; }
             [DataMember] public string GitChanges { get; set; }
             [DataMember] public string GitIgnore { get; set; }
             [DataMember] public string README { get; set; }
@@ -61,57 +61,54 @@ namespace GrooperGit
         {
             get => Props.GitIgnore; set { Props.GitIgnore = value; PropsDirty = true; }
         }
-        
+
         /// <summary>Implements <a target="_blank" href="https://en.wikipedia.org/wiki/OAuth">OAuth Authentication</a> as defined in 
         /// <a target="_blank" href="https://oauth.net/2/">OAuth 2.0</a>.</summary>
         [DataMember, Viewable, DisplayName("Remote URL"), DV("https://github.com/")]
         public string RemoteURL
         {
-            get => Props.RemoteURL; set {Props.RemoteURL = value; PropsDirty = true; }
+            get => Props.RemoteURL; set { Props.RemoteURL = value; PropsDirty = true; }
         }
 
-        [DataMember, Viewable,DisplayName("Repo"),TypeConverter(typeof(ExpandableConverter)) ,Category("Git")]
+        [DataMember, Viewable, DisplayName("Repo"), TypeConverter(typeof(ExpandableConverter)), Category("Git")]
         public GitRepository Repository
         {
-            get 
-            { 
+            get
+            {
                 if (Props.Repository == null)
                 {
                     Props.Repository = new GitRepository(this);
                 }
                 return Props.Repository;
-            } 
+            }
             set { Props.Repository = value; PropsDirty = true; }
 
         }
 
-        // [DataContract, DisplayName("GitHub OAuth")]
-        // public class OtherRepo : GitHubOauth
-        // {
-        //     protected override string Resource => "https://api.github.com/login/"; 
-        // }
-        //
         [DataMember, Viewable, DisplayName("README"), UI(typeof(MarkDownEditor)), Category("Git")]
         public string README
         {
             get
             {
-                var allResourceFiles = this.get_AllChildrenOfType(typeof(ResourceFile));
+                IEnumerable<GrooperNode> allResourceFiles = get_AllChildrenOfType(typeof(ResourceFile));
                 ResourceFile readmeFile = (ResourceFile)allResourceFiles.FirstOrDefault(rf => rf.Name.Equals("README.MD", StringComparison.OrdinalIgnoreCase));
-                if (readmeFile != null) return readmeFile.ReadAsText();
-                return readmeFile.ReadAsText();
+                return readmeFile != null ? readmeFile.ReadAsText() : "";
             }
             set
             {
-                var allResourceFiles = this.get_AllChildrenOfType(typeof(ResourceFile));
+                IEnumerable<GrooperNode> allResourceFiles = get_AllChildrenOfType(typeof(ResourceFile));
                 ResourceFile readmeFile = (ResourceFile)allResourceFiles.FirstOrDefault(rf => rf.Name.Equals("README.MD", StringComparison.OrdinalIgnoreCase));
                 if (readmeFile == null)
                 {
-                    readmeFile = new ResourceFile(this.Database);
-                    this.AppendNode(readmeFile);
+                    readmeFile = new ResourceFile(Database);
+                    if (AppendNode(readmeFile) == false)
+                    {
+                        throw new Exception("Unable to append ResourceFile node") { };
+                    }
+
                     readmeFile.SaveTextFile("README.MD", value, true);
                 }
-                readmeFile.SaveTextFile("README.MD", value, true); PropsDirty = true; 
+                readmeFile.SaveTextFile("README.MD", value, true); PropsDirty = true;
             }
         }
 
@@ -121,6 +118,9 @@ namespace GrooperGit
             get => Database.GetNodes<GrooperNode>(Props.ChangedIds);
             set { Props.ChangedIds = new List<Guid>(value.Where(Item => Item.Id != Id).Select(Item => Item.Id)); PropsDirty = true; }
         }
+
+        public string LocalPath { get; internal set; }
+
         public override ValidationErrorList ValidateProperties()
         {
             ValidationErrorList retVal = base.ValidateProperties();

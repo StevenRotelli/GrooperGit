@@ -10,8 +10,8 @@ namespace GrooperGit
     [DataContract, DisplayName("GitHub OAuth")]
     public abstract class GitHubOauth : OAuthAuthentication
     {
-        protected override string AuthBaseURL { get => "https:api.github.com/user" ;} 
-        protected override string RedirectURL { get => "https:api.github.com/user" ;} 
-        protected override string ClientID{ get => "" ; }
+        protected override string AuthBaseURL => "https:api.github.com/user";
+        protected override string RedirectURL => "https:api.github.com/user";
+        protected override string ClientID => "";
     }
 }

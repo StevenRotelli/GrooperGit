@@ -16,3 +16,9 @@ D:/GrooperGit/obj/Debug/GrooperGit.pdb
 /Users/stevenrotelli/Developer/Visual Studio/GrooperGit/obj/Debug/GrooperGit.csproj.CoreCompileInputs.cache
 /Users/stevenrotelli/Developer/Visual Studio/GrooperGit/obj/Debug/GrooperGit.dll
 /Users/stevenrotelli/Developer/Visual Studio/GrooperGit/obj/Debug/GrooperGit.pdb
+/Users/stevenrotelli/Developer/vim/GrooperGit/obj/Debug/GrooperGit.csproj.AssemblyReference.cache
+/Users/stevenrotelli/Developer/vim/GrooperGit/obj/Debug/GrooperGit.Properties.Resources.resources
+/Users/stevenrotelli/Developer/vim/GrooperGit/obj/Debug/GrooperGit.csproj.GenerateResource.cache
+/Users/stevenrotelli/Developer/vim/GrooperGit/obj/Debug/GrooperGit.csproj.CoreCompileInputs.cache
+/Users/stevenrotelli/Developer/vim/GrooperGit/obj/Debug/GrooperGit.dll
+/Users/stevenrotelli/Developer/vim/GrooperGit/obj/Debug/GrooperGit.pdb

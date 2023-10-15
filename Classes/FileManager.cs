@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Collections.Generic;
 using Grooper;
@@ -9,6 +10,7 @@ namespace GrooperGit
     /// <remarks>
     /// This is because Grooper Nodes aren't files and need to be able to detect differences as files and compare differences as files.
     /// </remarks>
+    [Obsolete("FileManager is depricated, factory replaced for mutator NodeAsfile")]
     public class FileManager
     {
         /// <summary>
@@ -19,19 +21,18 @@ namespace GrooperGit
         {
             if (grooperNode.TypeDisplayName == "GitProject")
             {
-                var gitProject = (GitProject)grooperNode;
+                GitProject gitProject = (GitProject)grooperNode;
 
-                if (string.IsNullOrEmpty(gitProject?.LocalRepository)) return;
+                // if (string.IsNullOrEmpty(gitProject?.LocalRepository)) return;
 
-                var gitConsole = new GitShell(gitProject.LocalRepository);
-                foreach (var node in gitProject.AllChildren)
+                foreach (GrooperNode node in gitProject.AllChildren)
                 {
                     if (!File.Exists(""))
                     {
-                        node.SetValue("GitStatus", "New");
+                        node.SetValue("Git", "New");
                         continue;
                     }
-                    FileManager.NodeToFile(node);
+                    NodeToFile(node);
                 }
             }
         }
@@ -59,13 +60,13 @@ namespace GrooperGit
             if (obj is GitProject)
             {
                 var node = obj as GitProject;
-                File.WriteAllLines(Path.Combine(node.LocalRepository, node.Id + ".json"), node.PropertiesJson.Split('\n'));
+                // File.WriteAllLines(Path.Combine(node.LocalRepository, node.Id + ".json"), node.PropertiesJson.Split('\n'));
             }
             else
             {
                 var node = obj as GrooperNode;
                 var parentNode = node.ParentProject as GitProject;
-                File.WriteAllLines(Path.Combine(parentNode.LocalRepository, node.Id + ".json"), node.PropertiesJson.Split('\n'));
+                // File.WriteAllLines(Path.Combine(parentNode.LocalRepository, node.Id + ".json"), node.PropertiesJson.Split('\n'));
             }
         }
     }

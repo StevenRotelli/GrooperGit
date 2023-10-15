@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using Grooper;
-using Grooper.Core;
+﻿using Grooper;
 
-
-
+#pragma warning disable CS1591
 namespace GrooperGit
 {
     /// <summary>Template for a custom for ObjectCommands under GitProject.</summary>
     /// <remarks>This abstract is here to minimize code rewrites for allowed exection.</remarks>
-    public abstract class GitCommand : ObjectCommand<GrooperNode> 
+    public abstract class GitCommand : ObjectCommand<GrooperNode>
     {
-        
         protected override bool CanExecute(GrooperNode Item)
-        {   
-            if (Item.GetType() != typeof(ProjectResourceAttribute)) return false;
-            if (!Item.HasValue("GitStatus")) return false;          
-            return true;
+        {
+            return Item.GetType() == typeof(ProjectResourceAttribute) && Item.HasValue("Git");
         }
-
     }
 }

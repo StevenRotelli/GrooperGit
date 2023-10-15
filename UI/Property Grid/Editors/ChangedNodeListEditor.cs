@@ -1,11 +1,7 @@
-﻿using Grooper.Core;
-using Grooper;  
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System;
-using System.Security.AccessControl;
+using Grooper.Core;
+using Grooper;
 
 namespace GrooperGit
 {
@@ -18,9 +14,9 @@ namespace GrooperGit
         protected static IEnumerable<GrooperNode> GetModified(ConnectedObject ConnectedItem)
         {
             List<GrooperNode> RetVal = new List<GrooperNode>();
-            foreach (GrooperNode node in (ConnectedItem as GrooperNode))
+            foreach (GrooperNode node in ConnectedItem as GrooperNode)
             {
-                if (node.HasValue("GitStatus"))
+                if (node.HasValue("Git"))
                 {
                     RetVal.Add(node);
                 }

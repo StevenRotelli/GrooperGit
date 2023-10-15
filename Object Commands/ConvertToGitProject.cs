@@ -3,8 +3,8 @@ using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
-using static Grooper.GlobalCode;
-#pragma warning disable 1591
+
+#pragma warning disable CS1591
 
 namespace GrooperGit
 {
@@ -18,14 +18,14 @@ namespace GrooperGit
     [DataContract, IconResource("Git"), DisplayName("Publish to Git Repository"), Category("Share")]
     public class ConverToGitProject : ObjectCommand<Project>
     {
-        [DataMember, DefaultValue("C:\\GitRepositories\\")]
-        public string LocalRepository { get; set; }
+        private readonly string _locaPath;
 
-        [DisplayName("Local Repository"), Required, Viewable]
-        public string _LocalRepository
+        ///<summary>The local path of the Git repository</summary>
+        [DisplayName("Local Path"), Required, Viewable]
+        public string LocalPath
         {
-            get { return LocalRepository; }
-            set { LocalRepository = value; }
+            get => LocalPath;
+            set => LocalPath = value;
         }
 
         /// <summary>
@@ -35,40 +35,35 @@ namespace GrooperGit
         protected override void Execute(Project item)
         {
             string assemblyName = Assembly.GetExecutingAssembly().FullName;
-            string typeName = assemblyName.Split(',')[0] + ".GitProject";
+            string typeName = assemblyName.Split(',')[0] + ".GitProject"; //derives node name from assembly incase Object Library is renamed
 
-            Database.ExecuteScalar($"UPDATE TreeNode SET TypeName=N'{typeName}' OUTPUT Inserted.RowVersion WHERE Id='{item.Id}'");
+            string sqlCommand = $"UPDATE TreeNode SET TypeName=N'{typeName}' OUTPUT Inserted.RowVersion WHERE Id='{item.Id}'";
+            Database.ExecuteScalar(sqlCommand);
             item.Database.PurgeCache();
             item.Database.ResetCache();
 
             GitProject projectNode = (GitProject)Database.GetNode(item.Id);
             //GitProject.GrooperNode_Properties projectNodeProperties = (GitProject.GrooperNode_Properties)projectNode.prop; 
 
-            projectNode.LocalRepository = LocalRepository;
-            //projectNode.localBranch = "* master";
+            projectNode.LocalPath = _locaPath;
+            projectNode.Repository.LocalBranch = "* master";
             projectNode.README = $"# {item.Name}";
             projectNode.GitIgnore = $"*.jpg{Environment.NewLine}";
 
             //string json = GlobalCode.CleanSql(ObjectSerializer.ToJson(projectNode.PropertiesJson));
             //Database.ExecuteScalar($"UPDATE TreeNode SET Properties=N'{json}' OUTPUT Inserted.RowVersion WHERE Id='{item.Id}'");
+            projectNode.Repository.Init();
 
-            var gitConsole = new GitShell(LocalRepository);
-            gitConsole.Init();
-
-            FileManager.NodeToFile(projectNode);
-            foreach (var childNode in projectNode.AllChildren)
+            foreach (GrooperNode childNode in projectNode.AllChildren)
             {
-                FileManager.NodeToFile(childNode);
+                NodeAsFile nodeAsFile = new NodeAsFile(childNode);
+                nodeAsFile.WriteAll();
             }
-
-            gitConsole.Add(".");
-            gitConsole.Commit("Repository Initialized");
         }
 
         protected override bool CanExecute(Project item)
         {
-            if (item.TypeName.Contains("GitProject")) return false;
-            return true;
+            return !item.TypeName.Contains("GitProject");
         }
 
     }

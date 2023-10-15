@@ -1,12 +1,8 @@
 ﻿using Grooper;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GrooperGit 
+namespace GrooperGit
 {
     /// <summary>
     /// Creates a dropdown list of branches from the connected Git Project.
@@ -16,10 +12,8 @@ namespace GrooperGit
         /// <inheritdoc/>
         protected override IEnumerable<string> GetListItems(GitProject Instance, PropertyDescriptor pd)
         {
-            if (Instance == null)  return new List<string>(); 
-
-            GitShell gitShell = new GitShell(Instance.LocalRepository);
-            return gitShell.ListBranches();
+            IEnumerable<string> branches = Instance.Repository.Branch("list").Split('\n');
+            return Instance == null ? new List<string>() : branches;
         }
     }
 }

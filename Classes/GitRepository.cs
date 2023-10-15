@@ -1,8 +1,8 @@
 ﻿using System;
 using Grooper;
+using System.IO;
 using System.ComponentModel;
 using System.Collections.Generic;
-using System.IO;
 using System.Runtime.Serialization;
 
 namespace GrooperGit
@@ -13,7 +13,7 @@ namespace GrooperGit
     [DataContract, HelpBase]
     public class GitRepository : EmbeddedObject
     {
-        private string _LocalPath = Path.Combine(Path.GetPathRoot(Environment.SystemDirectory), "GrooperGit", Guid.NewGuid().ToString());
+        private string _localPath = Path.Combine(Path.GetPathRoot(Environment.SystemDirectory), "GrooperGit", Guid.NewGuid().ToString());
 
         /// <inheritdoc/>
         public GitRepository(ConnectedObject Owner) : base(Owner)
@@ -26,15 +26,18 @@ namespace GrooperGit
         [DataMember, Viewable, DisplayName("Local Path")]
         public string LocalPath
         {
-            get { return _LocalPath; }
-            
-            set 
-            {   
-                var directoryInfo = new DirectoryInfo(LocalPath);
-                if (!directoryInfo.Exists) directoryInfo.Create();
-                  
-                _LocalPath = value; 
-                //instance.OwnerNode.PropsDirty = true;   
+            get => _localPath;
+
+            set
+            {
+                DirectoryInfo directoryInfo = new DirectoryInfo(LocalPath);
+                if (!directoryInfo.Exists)
+                {
+                    directoryInfo.Create();
+                }
+
+                _localPath = value;
+                OwnerNode.PropsDirty = true;
             }
         }
 
@@ -60,12 +63,29 @@ namespace GrooperGit
 
         #region Methods
 
+        /// <summary>Creates the necessary files for all nodes in the local git repository.</summary>
+        /// <remarks>This will create each node as a folder in the root of the local path, and all settings, and files in that folder.</remarks>
+        public void SyncFiles()
+        {
+            foreach (GrooperNode node in OwnerNode.AllChildren)
+            {
+                NodeAsFile nodeAsFile = new NodeAsFile(node);
+                nodeAsFile.WriteAll();
+            }
+        }
+
         ///<summary>test</summary>
         public void AddRemote()
         {
-          BaseCommand($"git remote add ");
+            _ = BaseCommand($"git remote add ");
         }
-        
+        /// <summary>Executes a Git Compare/Diff operation, showing differences between files or branches in the specified GitProject [Object Command].</summary>
+        /// <remarks>A Git Compare/Diff highlights the changes between two sets of code, aiding in understanding modifications and aiding in code review. More details can be found <a href="https://git-scm.com/docs/git-diff">here</a>.</remarks>
+        public IEnumerable<string> Diff(GrooperNode node)
+        {
+            string path = Path.Combine(_localPath, node.Id.ToString());
+            return BaseCommand($"diff {path}").Split('\n');
+        }
         ///<summary>
         ///Initializes a new Git repository for the given repository name.
         ///This method invokes the 'git init' command which initializes a new Git repository and begins tracking an existing directory.
@@ -73,9 +93,9 @@ namespace GrooperGit
         ///</summary>
         public void Init()
         {
-            BaseCommand($"init ");
+            _ = BaseCommand($"init ");
         }
-            
+
         ///<summary>
         ///Stages the specified files or directories in preparation for a commit.
         ///The 'git add' command updates the index using the current content found in the working tree.
@@ -83,34 +103,30 @@ namespace GrooperGit
         ///</summary>
         public void Add(string fileName)
         {
-            BaseCommand($"add '{fileName}'");
+            _ = BaseCommand($"add '{fileName}'");
         }
-                
+
         ///<summary>
         ///Unstages or removes the specified files or directories from the index and the working tree.
         ///The 'git rm' command removes files from the working tree and from the index.
         ///For more information, refer to the official Git documentation: https://git-scm.com/docs/git-rm
         ///</summary>
-        public void Remove(List<GrooperNode> Items)
+        public void Remove(GrooperNode Item)
         {
-          foreach(GrooperNode node in Items)
-          {
-          
-          }
-            // BaseCommand($"remove '{fileName}'");
+            _ = BaseCommand($"reset /{Item.Id}");
         }
         ///<summary>Executes a Git Commit operation on the specified GitProject [Object Command].</summary>
         ///<remarks>A Git Commit captures changes to files in the project, allowing for tracking of modifications and collaboration with other contributors. More details can be found <a href="https://git-scm.com/docs/git-commit">here</a>.</remarks>
         public void Commit(string commitMesage)
         {
-            BaseCommand($"commit -m '{commitMesage}'");
+            _ = BaseCommand($"commit -m '{commitMesage}'");
         }
-        
+
         /// <summary>Executes a Git Push operation, sending local changes from the specified GitProject to a remote repository [Object Command].</summary>
         /// <remarks>A Git Push updates the remote repository with commits made locally, sharing modifications with other contributors. More details can be found <a href="https://git-scm.com/docs/git-push">here</a>.</remarks>
-        public void Push(string branch, string remote, string arguments="")
+        public void Push(string branch, string remote, string arguments = "")
         {
-            BaseCommand($"push '{branch}' '{remote}' {arguments}");
+            _ = BaseCommand($"push '{branch}' '{remote}' {arguments}");
         }
 
         ///<summary>
@@ -120,33 +136,20 @@ namespace GrooperGit
         ///</summary>
         ///<param name="operation">The operation to perform: "list", "create", or "delete".</param>
         ///<param name="branchName">The name of the branch, if applicable.</param>
-        public void Branch(string operation, string branchName = "")
+        public string Branch(string operation, string branchName = "")
         {
             switch (operation.ToLower())
             {
                 case "list":
-                    BaseCommand("branch");
-                    break;
+                    return BaseCommand("branch");
                 case "create":
-                    if (!string.IsNullOrEmpty(branchName))
-                    {
-                       BaseCommand("branch {branchName}");
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Branch name is required for create operation.");
-                    }
-                    break;
+                    return !string.IsNullOrEmpty(branchName)
+                        ? BaseCommand("branch {branchName}")
+                        : throw new ArgumentException("Branch name is required for create operation.");
                 case "delete":
-                    if (!string.IsNullOrEmpty(branchName))
-                    {
-                        BaseCommand("branch -d {branchName}");
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Branch name is required for delete operation.");
-                    }
-                    break;
+                    return !string.IsNullOrEmpty(branchName)
+                        ? BaseCommand("branch -d {branchName}")
+                        : throw new ArgumentException("Branch name is required for delete operation.");
                 default:
                     throw new ArgumentException($"Invalid operation: {operation}. Supported operations are 'list', 'create', and 'delete'.");
             }
@@ -158,9 +161,9 @@ namespace GrooperGit
         /// </summary>
         /// <param name="gitArguments">example command -m "Patched Issue"</param>
         /// <returns>returns the output of the console as string</returns>
-        private string BaseCommand (string gitArguments = "help")
+        private string BaseCommand(string gitArguments = "help")
         {
-            Shell shell = new Shell(this._LocalPath);
+            Shell shell = new Shell(_localPath);
             return shell.Command("git", gitArguments);
         }
 

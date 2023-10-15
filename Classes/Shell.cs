@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 
@@ -10,28 +8,15 @@ namespace GrooperGit
     /// An abstract for running CLI commmands through powershell. 
     /// </summary>
     public class Shell
-    {   
-        private string _errorText;
-        private bool _error;
-        private string _cwd;
-        
+    {
         ///<summary>The current working directory of the shell</summary>
-        public string WorkingDirectory
-        {
-            get { return _cwd; }
-        }
-       
-        ///<summary>boolean showing whethe or not the console returned an error</summary> 
-        public bool Error 
-        {
-            get { return _error; }
-        }
+        public string WorkingDirectory { get; }
 
-       ///<summary>boolean showing whethe or not the console returned an error</summary> 
-        public string ErrorMessage 
-        {
-            get { return _errorText; }
-        }
+        ///<summary>boolean showing whethe or not the console returned an error</summary> 
+        public bool Error { get; private set; }
+
+        ///<summary>boolean showing whethe or not the console returned an error</summary> 
+        public string ErrorMessage { get; private set; }
 
         /// <summary>
         /// Contsctructor
@@ -39,25 +24,29 @@ namespace GrooperGit
         /// <param name="cwd">The current working directory of the shell</param>
         public Shell(string cwd)
         {
-            this._cwd = cwd;
+            WorkingDirectory = cwd;
         }
-        
+
         ///<summary>Runs a powershell command.</summary>
         ///<remarks>Shell is disposed between calls and will not store any scrollback.</remarks>
         ///<param name="application">The application to be ran i.e ping, mkdir, git.</param>
         ///<param name="args">The arguments passed into the clie</param>
         public string Command(string application, string args)
         {
-            var di = new DirectoryInfo(WorkingDirectory);
-            if (!di.Exists) di.Create();
+            DirectoryInfo di = new DirectoryInfo(WorkingDirectory);
+            if (!di.Exists)
+            {
+                di.Create();
+            }
+
             string command = $"{application} {args}";
 
-            var process = new Process
+            Process process = new Process
             {
 
                 StartInfo = new ProcessStartInfo
                 {
-                    WorkingDirectory = WorkingDirectory, 
+                    WorkingDirectory = WorkingDirectory,
                     FileName = "powershell.exe",
                     UseShellExecute = false,
                     CreateNoWindow = true,
@@ -75,13 +64,13 @@ namespace GrooperGit
             process.WaitForExit();
             if (!string.IsNullOrEmpty(errorOutput))
             {
-                _error = true;
-                _errorText = errorOutput;
+                Error = true;
+                ErrorMessage = errorOutput;
                 throw new Exception($"GitOutput: {errorOutput}");
 
             }
-            _errorText = "";
-            _error = false;
+            ErrorMessage = "";
+            Error = false;
             return output;
         }
     }
