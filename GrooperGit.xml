@@ -4,19 +4,9 @@
         <name>GrooperGit</name>
     </assembly>
     <members>
-        <member name="T:GrooperGit.FileManager">
-            <summary>
-            A Class to maintain a file abstract of the Grooper Tree Under the git project in order to leverage GIT commands against the Grooper Nodes.
-            </summary>
-            <remarks>
-            This is because Grooper Nodes aren't files and need to be able to detect differences as files and compare differences as files.
-            </remarks>
-        </member>
-        <member name="M:GrooperGit.FileManager.SyncProject(Grooper.GrooperNode)">
-            <summary>
-            Syncs the active node settings of all children in the project and marks their appropriate GitStatus.
-            </summary>
-            <param name="grooperNode">The GrooperNode to be synced.</param>
+        <member name="T:GrooperGit.GitHubOauth">
+            <summary>Implements <a target='_blank' href='https://en.wikipedia.org/wiki/OAuth'>OAuth 2.0</a> authentication as defined in 
+               <a target='_blank' href='https://tools.ietf.org/html/rfc6749'>RFC-6749</a> against the Microsoft OAuth servers at https://login.microsoftonline.com/common/oauth2.</summary>
         </member>
         <member name="T:GrooperGit.GitRepository">
             <summary>
@@ -26,35 +16,106 @@
         <member name="M:GrooperGit.GitRepository.#ctor(Grooper.ConnectedObject)">
             <inheritdoc/>
         </member>
-        <member name="P:GrooperGit.GitRepository.localPath">
-            <summary>Represents the location of the local Git repository</summary>
-            <remarks>The path is also where the required Git CLI runs</remarks>
-        </member>
-        <member name="P:GrooperGit.GitRepository.localRepository">
+        <member name="P:GrooperGit.GitRepository.LocalRepository">
             <summary>Represents the local path of the Git repository associated with the Grooper Project.</summary>
             <remarks>The repository URL points to the location where the Git project is hosted. Developers can use this URL to clone, fetch, or push changes to the repository. It's an essential link for collaboration and code management.</remarks>
         </member>
-        <member name="P:GrooperGit.GitRepository.localBranch">
+        <member name="P:GrooperGit.GitRepository.LocalBranch">
             <summary>Manages Git branches within the specified GitProject.</summary>
             <remarks>Git branches allow developers to work on features or fixes in isolation, without affecting the main or other development lines. This ensures code stability and streamlined collaboration. More details can be found <a href="https://git-scm.com/docs/git-branch">here</a>.</remarks>
         </member>
-        <member name="P:GrooperGit.GitRepository.remoteRepository">
+        <member name="P:GrooperGit.GitRepository.RemoteRepository">
             <summary>Represents the remote path of the Git repository associated with the Grooper Project.</summary>
             <remarks>The repository URL points to the location where the Git project is hosted. Developers can use this URL to clone, fetch, or push changes to the repository. It's an essential link for collaboration and code management.</remarks>
+        </member>
+        <member name="P:GrooperGit.GitRepository.RemoteBranch">
+            <summary>Manages Git branches within the specified GitProject.</summary>
+            <remarks>Git branches allow developers to work on features or fixes in isolation, without affecting the main or other development lines. This ensures code stability and streamlined collaboration. More details can be found <a href="https://git-scm.com/docs/git-branch">here</a>.</remarks>
+        </member>
+        <member name="M:GrooperGit.GitRepository.SyncFiles">
+            <summary>Creates the necessary files for all nodes in the local git repository.</summary>
+            <remarks>This will create each node as a folder in the root of the local path, and all settings, and files in that folder.</remarks>
+        </member>
+        <member name="M:GrooperGit.GitRepository.AddRemote">
+            <summary>test</summary>
+        </member>
+        <member name="M:GrooperGit.GitRepository.Diff(Grooper.GrooperNode)">
+            <summary>Executes a Git Compare/Diff operation, showing differences between files or branches in the specified GitProject [Object Command].</summary>
+            <remarks>A Git Compare/Diff highlights the changes between two sets of code, aiding in understanding modifications and aiding in code review. More details can be found <a href="https://git-scm.com/docs/git-diff">here</a>.</remarks>
+        </member>
+        <member name="M:GrooperGit.GitRepository.Init">
+            <summary>
+            Initializes a new Git repository for the given repository name.
+            This method invokes the 'git init' command which initializes a new Git repository and begins tracking an existing directory.
+            For more information, refer to the official Git documentation: https://git-scm.com/docs/git-init
+            </summary>
+        </member>
+        <member name="M:GrooperGit.GitRepository.Add(System.String)">
+            <summary>
+            Stages the specified files or directories in preparation for a commit.
+            The 'git add' command updates the index using the current content found in the working tree.
+            For more information, refer to the official Git documentation: https://git-scm.com/docs/git-add
+            </summary>
+        </member>
+        <member name="M:GrooperGit.GitRepository.Remove(Grooper.GrooperNode)">
+            <summary>
+            Unstages or removes the specified files or directories from the index and the working tree.
+            The 'git rm' command removes files from the working tree and from the index.
+            For more information, refer to the official Git documentation: https://git-scm.com/docs/git-rm
+            </summary>
+        </member>
+        <member name="M:GrooperGit.GitRepository.Commit(System.String)">
+            <summary>Executes a Git Commit operation on the specified GitProject [Object Command].</summary>
+            <remarks>A Git Commit captures changes to files in the project, allowing for tracking of modifications and collaboration with other contributors. More details can be found <a href="https://git-scm.com/docs/git-commit">here</a>.</remarks>
+        </member>
+        <member name="M:GrooperGit.GitRepository.Push(System.String,System.String,System.String)">
+            <summary>Executes a Git Push operation, sending local changes from the specified GitProject to a remote repository [Object Command].</summary>
+            <remarks>A Git Push updates the remote repository with commits made locally, sharing modifications with other contributors. More details can be found <a href="https://git-scm.com/docs/git-push">here</a>.</remarks>
+        </member>
+        <member name="M:GrooperGit.GitRepository.Branch(System.String,System.String)">
+            <summary>
+            Interacts with the branch command in Git.
+            The 'git branch' command lists, creates, or deletes branches.
+            For more information, refer to the official Git documentation: https://git-scm.com/docs/git-branch
+            </summary>
+            <param name="operation">The operation to perform: "list", "create", or "delete".</param>
+            <param name="branchName">The name of the branch, if applicable.</param>
+        </member>
+        <member name="M:GrooperGit.GitRepository.BaseCommand(System.String)">
+            <summary>
+            Command to be executed by the windows server powershell the command is already prefixed with 'git'
+            </summary>
+            <param name="gitArguments">example command -m "Patched Issue"</param>
+            <returns>returns the output of the console as string</returns>
         </member>
         <member name="M:GrooperGit.GitRepository.ValidateProperties">
             <inheritdoc/>
         </member>
         <member name="T:GrooperGit.Shell">
             <summary>
-            An abstract for running git CLI commmands through powershell. 
+            An abstract for running CLI commmands through powershell. 
             </summary>
+        </member>
+        <member name="P:GrooperGit.Shell.WorkingDirectory">
+            <summary>The current working directory of the shell</summary>
+        </member>
+        <member name="P:GrooperGit.Shell.Error">
+            <summary>boolean showing whethe or not the console returned an error</summary> 
+        </member>
+        <member name="P:GrooperGit.Shell.ErrorMessage">
+            <summary>boolean showing whethe or not the console returned an error</summary> 
         </member>
         <member name="M:GrooperGit.Shell.#ctor(System.String)">
             <summary>
             Contsctructor
             </summary>
             <param name="cwd">The current working directory of the shell</param>
+        </member>
+        <member name="M:GrooperGit.Shell.Command(System.String,System.String)">
+            <summary>Runs a powershell command.</summary>
+            <remarks>Shell is disposed between calls and will not store any scrollback.</remarks>
+            <param name="application">The application to be ran i.e ping, mkdir, git.</param>
+            <param name="args">The arguments passed into the clie</param>
         </member>
         <member name="T:GrooperGit.GitProject">
             <summary>
@@ -66,6 +127,10 @@
             which define the connections, data structures, and logic used when processing documents through Grooper.
             </remarks>
         </member>
+        <member name="P:GrooperGit.GitProject.RemoteURL">
+            <summary>Implements <a target="_blank" href="https://en.wikipedia.org/wiki/OAuth">OAuth Authentication</a> as defined in 
+            <a target="_blank" href="https://oauth.net/2/">OAuth 2.0</a>.</summary>
+        </member>
         <member name="T:GrooperGit.ConverToGitProject">
             <summary>
             Executes a publish to git, and creates a git repository on a Project [Object Command].
@@ -74,6 +139,9 @@
             Transforms the node type from Project to GitProject, and begins a repository connection.
             <a href="https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository">More info</a>.
             </remarks>
+        </member>
+        <member name="P:GrooperGit.ConverToGitProject.LocalPath">
+            <summary>The local path of the Git repository</summary>
         </member>
         <member name="M:GrooperGit.ConverToGitProject.Execute(Grooper.Project)">
             <summary>
@@ -197,6 +265,24 @@
         <member name="T:GrooperGit.Stage">
             <summary>Executes a Git Stage operation, preparing changes for commit in the specified GitProject [Object Command].</summary>
             <remarks>Git Staging allows you to prepare changes for a commit, helping you organize modifications and facilitating code review. Learn more about Git Staging <a href="https://git-scm.com/docs/git-stage">here</a>.</remarks>
+        </member>
+        <member name="M:GrooperGit.Stage.Execute(Grooper.GrooperNode)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GrooperGit.Commit">
+            <summary>Executes a Git Commit operation on the specified GitProject [Object Command].</summary>
+            <remarks>A Git Commit captures changes to files in the project, allowing for tracking
+            of modifications and collaboration with other contributors. More details can be found <a href="https://git-scm.com/docs/git-commit">here</a>.</remarks>
+        </member>
+        <member name="P:GrooperGit.Commit.CommitMessage">
+            <inheritdoc/>
+        </member>
+        <member name="M:GrooperGit.Commit.Execute(GrooperGit.GitProject)">
+            <summary></summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:GrooperGit.Commit.CanExecute(GrooperGit.GitProject)">
+            <summary>Will not execute if there are no staged changes.</summary>
         </member>
     </members>
 </doc>

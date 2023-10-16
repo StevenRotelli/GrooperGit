@@ -1,5 +1,6 @@
 using Grooper;
 using System;
+using System.IO;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -18,16 +19,11 @@ namespace GrooperGit
     [DataContract, IconResource("Git"), DisplayName("Publish to Git Repository"), Category("Share")]
     public class ConverToGitProject : ObjectCommand<Project>
     {
-        private readonly string _locaPath;
-
+        
         ///<summary>The local path of the Git repository</summary>
         [DisplayName("Local Path"), Required, Viewable]
-        public string LocalPath
-        {
-            get => LocalPath;
-            set => LocalPath = value;
-        }
-
+        public string LocalPath { get; set;  }
+        
         /// <summary>
         /// Code that will be executed when the [Object Command] is executed.
         /// </summary>
@@ -41,11 +37,12 @@ namespace GrooperGit
             Database.ExecuteScalar(sqlCommand);
             item.Database.PurgeCache();
             item.Database.ResetCache();
-
+            
             GitProject projectNode = (GitProject)Database.GetNode(item.Id);
             //GitProject.GrooperNode_Properties projectNodeProperties = (GitProject.GrooperNode_Properties)projectNode.prop; 
+ 
 
-            projectNode.LocalPath = _locaPath;
+            projectNode.LocalPath = LocalPath;
             projectNode.Repository.LocalBranch = "* master";
             projectNode.README = $"# {item.Name}";
             projectNode.GitIgnore = $"*.jpg{Environment.NewLine}";
@@ -59,6 +56,27 @@ namespace GrooperGit
                 NodeAsFile nodeAsFile = new NodeAsFile(childNode);
                 nodeAsFile.WriteAll();
             }
+        }
+        public override ValidationErrorList ValidateProperties()
+        {
+            DirectoryInfo path = null;
+            ValidationError pathErr = null;
+            try
+            {
+                path = new DirectoryInfo(LocalPath);
+                if (!path.Exists)
+                {
+                    pathErr = new ValidationError("Local Path", "Path not valid");
+                    base.ValidateProperties().Add(pathErr);
+                }
+            }
+            catch (Exception ex)
+            {
+                pathErr = new ValidationError("Local Path", $"Error: {ex.Message}");
+                base.ValidateProperties().Add(pathErr);
+            }
+            
+            return base.ValidateProperties();
         }
 
         protected override bool CanExecute(Project item)

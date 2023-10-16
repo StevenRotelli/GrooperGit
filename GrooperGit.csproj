@@ -111,7 +111,6 @@
     <Compile Include="Object Commands\Stage.cs" />
     <Compile Include="Object Commands\Commit.cs" />
     <Compile Include="Object Commands\Remove.cs" />
-    <Compile Include="**/*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\BlueCheck.png" />

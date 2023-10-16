@@ -12,8 +12,7 @@ namespace GrooperGit
         /// <inheritdoc/>
         protected override IEnumerable<string> GetListItems(GitProject Instance, PropertyDescriptor pd)
         {
-            IEnumerable<string> branches = Instance.Repository.Branch("list").Split('\n');
-            return Instance == null ? new List<string>() : branches;
+            return Instance == null ? new List<string>() : (IEnumerable<string>)Instance.Repository.Branch("list").Split('\n');
         }
     }
 }

@@ -19,8 +19,9 @@ namespace GrooperGit
             OwnerNode = owner;
             ParentProject = (GitProject)owner.ParentProject;
             // Path = ParentProject.Repository.LocalPath + BuildPathString(owner);
-            LocalPath = Path.Combine(ParentProject.Repository.LocalPath, OwnerNode.Id.ToString());
-            FileNames = (List<string>)owner.FileNames;
+            LocalPath = Path.Combine(ParentProject.LocalPath, OwnerNode.Id.ToString());
+            FileNames = new List<string>();
+            FileNames.AddRange(owner.FileNames);
             PropertiesJson = owner.PropertiesJson;
         }
 
@@ -61,7 +62,7 @@ namespace GrooperGit
                 }
                 string json = $"{{\n\"Name\" : \"{OwnerNode.DisplayName}\",\n";
                 json += $"\"ParentId\" : \"{OwnerNode.ParentId}\",\n";
-                json += OwnerNode.PropertiesJson.Substring(1, OwnerNode.PropertiesJson.Length);
+                json += OwnerNode.PropertiesJson.Substring(0, OwnerNode.PropertiesJson.Length);
                 path = $"{LocalPath}\\{OwnerNode.Id}.json";
                 File.WriteAllText(path, json);
             }

@@ -13,32 +13,13 @@ namespace GrooperGit
     [DataContract, HelpBase]
     public class GitRepository : EmbeddedObject
     {
-        private string _localPath = Path.Combine(Path.GetPathRoot(Environment.SystemDirectory), "GrooperGit", Guid.NewGuid().ToString());
+        private string _localPath;
 
         /// <inheritdoc/>
         public GitRepository(ConnectedObject Owner) : base(Owner)
         {
-
-        }
-
-        /// <summary>Represents the location of the local Git repository</summary>
-        /// <remarks>The path is also where the required Git CLI runs</remarks>
-        [DataMember, Viewable, DisplayName("Local Path")]
-        public string LocalPath
-        {
-            get => _localPath;
-
-            set
-            {
-                DirectoryInfo directoryInfo = new DirectoryInfo(LocalPath);
-                if (!directoryInfo.Exists)
-                {
-                    directoryInfo.Create();
-                }
-
-                _localPath = value;
-                OwnerNode.PropsDirty = true;
-            }
+            GitProject projectNode = (GitProject)Database.GetNode(OwnerNode.Id);
+            _localPath = projectNode.LocalPath;
         }
 
         /// <summary>Represents the local path of the Git repository associated with the Grooper Project.</summary>
