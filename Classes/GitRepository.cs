@@ -22,11 +22,8 @@ namespace GrooperGit
             _localPath = projectNode.LocalPath;
         }
 
-        /// <summary>Represents the local path of the Git repository associated with the Grooper Project.</summary>
-        /// <remarks>The repository URL points to the location where the Git project is hosted. Developers can use this URL to clone, fetch, or push changes to the repository. It's an essential link for collaboration and code management.</remarks>
-        [DataMember, Viewable, DisplayName("Local Repository"), Required, Category("Local")]
-        public string LocalRepository { get; set; }
-
+        
+    
         /// <summary>Manages Git branches within the specified GitProject.</summary>
         /// <remarks>Git branches allow developers to work on features or fixes in isolation, without affecting the main or other development lines. This ensures code stability and streamlined collaboration. More details can be found <a href="https://git-scm.com/docs/git-branch">here</a>.</remarks>
         [DataMember, Viewable, DisplayName("Local Branch"), TypeConverter(typeof(BranchListConverter)), Category("Local")]

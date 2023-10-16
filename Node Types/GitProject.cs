@@ -1,5 +1,6 @@
 using Grooper;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -90,25 +91,30 @@ namespace GrooperGit
         {
             get
             {
-                IEnumerable<GrooperNode> allResourceFiles = get_AllChildrenOfType(typeof(ResourceFile));
-                ResourceFile readmeFile = (ResourceFile)allResourceFiles.FirstOrDefault(rf => rf.Name.Equals("README.MD", StringComparison.OrdinalIgnoreCase));
-                return readmeFile != null ? readmeFile.ReadAsText() : "";
+                if (File.Exists($"{LocalPath}\\README.MD"))
+                {
+                    return File.ReadAllText($"{LocalPath}\\README.MD");
+                }
+                return "";
+                //IEnumerable<GrooperNode> allResourceFiles = get_AllChildrenOfType(typeof(ResourceFile));
+                //ResourceFile readmeFile = (ResourceFile)allResourceFiles.FirstOrDefault(rf => rf.Name.Equals("README.MD", StringComparison.OrdinalIgnoreCase));
+                //return readmeFile != null ? readmeFile.ReadAsText() : "";
             }
             set
             {
-                IEnumerable<GrooperNode> allResourceFiles = get_AllChildrenOfType(typeof(ResourceFile));
-                ResourceFile readmeFile = (ResourceFile)allResourceFiles.FirstOrDefault(rf => rf.Name.Equals("README.MD", StringComparison.OrdinalIgnoreCase));
-                if (readmeFile == null)
-                {
-                    readmeFile = new ResourceFile(Database);
-                    if (AppendNode(readmeFile) == false)
-                    {
-                        throw new Exception("Unable to append ResourceFile node") { };
-                    }
+                //IEnumerable<GrooperNode> allResourceFiles = get_AllChildrenOfType(typeof(ResourceFile));
+                //ResourceFile readmeFile = (ResourceFile)allResourceFiles.FirstOrDefault(rf => rf.Name.Equals("README.MD", StringComparison.OrdinalIgnoreCase));
+                //if (readmeFile == null)
+                //{
+                //    readmeFile = new ResourceFile(Database);
+                //    if (AppendNode(readmeFile) == false)
+                //    {
+                //        throw new Exception("Unable to append ResourceFile node") { };
+                //    }
 
-                    readmeFile.SaveTextFile("README.MD", value, true);
-                }
-                readmeFile.SaveTextFile("README.MD", value, true); PropsDirty = true;
+                //    readmeFile.SaveTextFile("README.MD", value, true);
+                //}
+                //readmeFile.SaveTextFile("README.MD", value, true); PropsDirty = true;
             }
         }
 
@@ -118,8 +124,10 @@ namespace GrooperGit
             get => Database.GetNodes<GrooperNode>(Props.ChangedIds);
             set { Props.ChangedIds = new List<Guid>(value.Where(Item => Item.Id != Id).Select(Item => Item.Id)); PropsDirty = true; }
         }
-
-        public string LocalPath { get; internal set; }
+        /// <summary>Represents the local path of the Git repository associated with the Grooper Project.</summary>
+        /// <remarks>The repository URL points to the location where the Git project is hosted. Developers can use this URL to clone, fetch, or push changes to the repository. It's an essential link for collaboration and code management.</remarks>
+        [DataMember, Viewable]
+        public string LocalPath { get => Props.LocalPath; set { Props.LocalPath = value; PropsDirty = true; } }
 
         public override ValidationErrorList ValidateProperties()
         {
