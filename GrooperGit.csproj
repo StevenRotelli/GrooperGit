@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\FileManager.cs" />
+    <Compile Include="Classes\Utils.cs" />
     <Compile Include="Classes\GitHubOauth.cs" />
     <Compile Include="Classes\GitRepository.cs" />
     <Compile Include="Classes\Shell.cs" />

@@ -22,8 +22,6 @@ namespace GrooperGit
             _localPath = projectNode.LocalPath;
         }
 
-        
-    
         /// <summary>Manages Git branches within the specified GitProject.</summary>
         /// <remarks>Git branches allow developers to work on features or fixes in isolation, without affecting the main or other development lines. This ensures code stability and streamlined collaboration. More details can be found <a href="https://git-scm.com/docs/git-branch">here</a>.</remarks>
         [DataMember, Viewable, DisplayName("Local Branch"), TypeConverter(typeof(BranchListConverter)), Category("Local")]

@@ -19,11 +19,10 @@ namespace GrooperGit
     [DataContract, IconResource("Git"), DisplayName("Publish to Git Repository"), Category("Share")]
     public class ConverToGitProject : ObjectCommand<Project>
     {
-        
         ///<summary>The local path of the Git repository</summary>
         [DisplayName("Local Path"), Required, Viewable]
-        public string LocalPath { get; set;  }
-        
+        public string LocalPath { get; set; }
+
         /// <summary>
         /// Code that will be executed when the [Object Command] is executed.
         /// </summary>
@@ -34,13 +33,12 @@ namespace GrooperGit
             string typeName = assemblyName.Split(',')[0] + ".GitProject"; //derives node name from assembly incase Object Library is renamed
 
             string sqlCommand = $"UPDATE TreeNode SET TypeName=N'{typeName}' OUTPUT Inserted.RowVersion WHERE Id='{item.Id}'";
-            Database.ExecuteScalar(sqlCommand);
+            _ = Database.ExecuteScalar(sqlCommand);
             item.Database.PurgeCache();
             item.Database.ResetCache();
-            
+
             GitProject projectNode = (GitProject)Database.GetNode(item.Id);
             //GitProject.GrooperNode_Properties projectNodeProperties = (GitProject.GrooperNode_Properties)projectNode.prop; 
- 
 
             projectNode.LocalPath = LocalPath;
             projectNode.Repository.LocalBranch = "* master";
@@ -59,11 +57,10 @@ namespace GrooperGit
         }
         public override ValidationErrorList ValidateProperties()
         {
-            DirectoryInfo path = null;
-            ValidationError pathErr = null;
+            ValidationError pathErr;
             try
             {
-                path = new DirectoryInfo(LocalPath);
+                DirectoryInfo path = new DirectoryInfo(LocalPath);
                 if (!path.Exists)
                 {
                     pathErr = new ValidationError("Local Path", "Path not valid");
@@ -75,7 +72,7 @@ namespace GrooperGit
                 pathErr = new ValidationError("Local Path", $"Error: {ex.Message}");
                 base.ValidateProperties().Add(pathErr);
             }
-            
+
             return base.ValidateProperties();
         }
 

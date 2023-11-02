@@ -57,11 +57,10 @@ namespace GrooperGit
         }
         #endregion
 
-        [DataMember, Viewable, DisplayName("gitignore"), UI(typeof(PgTextEditor)), Category("Git")]
-        public string GitIgnore
-        {
-            get => Props.GitIgnore; set { Props.GitIgnore = value; PropsDirty = true; }
-        }
+        /// <summary>Represents the local path of the Git repository associated with the Grooper Project.</summary>
+        /// <remarks>The repository URL points to the location where the Git project is hosted. Developers can use this URL to clone, fetch, or push changes to the repository. It's an essential link for collaboration and code management.</remarks>
+        [DataMember, Viewable, Category("Git")]
+        public string LocalPath { get => Props.LocalPath; set { Props.LocalPath = value; PropsDirty = true; } }
 
         /// <summary>Implements <a target="_blank" href="https://en.wikipedia.org/wiki/OAuth">OAuth Authentication</a> as defined in 
         /// <a target="_blank" href="https://oauth.net/2/">OAuth 2.0</a>.</summary>
@@ -69,6 +68,13 @@ namespace GrooperGit
         public string RemoteURL
         {
             get => Props.RemoteURL; set { Props.RemoteURL = value; PropsDirty = true; }
+        }
+
+        [DataMember, Viewable, RequiresUI, UI(typeof(ChangedNodeListEditor)), TypeConverter(typeof(PgCollectionConverter)), Category("Git")]
+        public List<GrooperNode> ChangedNodes
+        {
+            get => Database.GetNodes<GrooperNode>(Props.ChangedIds);
+            set { Props.ChangedIds = new List<Guid>(value.Where(Item => Item.Id != Id).Select(Item => Item.Id)); PropsDirty = true; }
         }
 
         [DataMember, Viewable, DisplayName("Repo"), TypeConverter(typeof(ExpandableConverter)), Category("Git")]
@@ -89,19 +95,16 @@ namespace GrooperGit
         [DataMember, Viewable, DisplayName("README"), UI(typeof(MarkDownEditor)), Category("Git")]
         public string README
         {
-            get
-            {
-                if (File.Exists($"{LocalPath}\\README.MD"))
-                {
-                    return File.ReadAllText($"{LocalPath}\\README.MD");
-                }
-                return "";
-                //IEnumerable<GrooperNode> allResourceFiles = get_AllChildrenOfType(typeof(ResourceFile));
-                //ResourceFile readmeFile = (ResourceFile)allResourceFiles.FirstOrDefault(rf => rf.Name.Equals("README.MD", StringComparison.OrdinalIgnoreCase));
-                //return readmeFile != null ? readmeFile.ReadAsText() : "";
-            }
+            get => File.Exists($"{LocalPath}\\README.MD") ? File.ReadAllText($"{LocalPath}\\README.MD") : "";
+            //IEnumerable<GrooperNode> allResourceFiles = get_AllChildrenOfType(typeof(ResourceFile));
+            //ResourceFile readmeFile = (ResourceFile)allResourceFiles.FirstOrDefault(rf => rf.Name.Equals("README.MD", StringComparison.OrdinalIgnoreCase));
+            //return readmeFile != null ? readmeFile.ReadAsText() : "";
             set
             {
+                File.WriteAllText($"{LocalPath}\\README.MD", value);
+                Props.GitIgnore = value;
+                PropsDirty = true;
+
                 //IEnumerable<GrooperNode> allResourceFiles = get_AllChildrenOfType(typeof(ResourceFile));
                 //ResourceFile readmeFile = (ResourceFile)allResourceFiles.FirstOrDefault(rf => rf.Name.Equals("README.MD", StringComparison.OrdinalIgnoreCase));
                 //if (readmeFile == null)
@@ -118,16 +121,17 @@ namespace GrooperGit
             }
         }
 
-        [DataMember, Viewable, RequiresUI, UI(typeof(ChangedNodeListEditor)), TypeConverter(typeof(PgCollectionConverter))]
-        public List<GrooperNode> ChangedNodes
+        [DataMember, Viewable, DisplayName("gitignore"), UI(typeof(PgTextEditor)), Category("Git")]
+        public string GitIgnore
         {
-            get => Database.GetNodes<GrooperNode>(Props.ChangedIds);
-            set { Props.ChangedIds = new List<Guid>(value.Where(Item => Item.Id != Id).Select(Item => Item.Id)); PropsDirty = true; }
+            get => File.Exists($"{LocalPath}\\.gitignore") ? File.ReadAllText($"{LocalPath}\\.gitignore") : "";
+            set
+            {
+                File.WriteAllText($"{LocalPath}\\.gitignore", value);
+                Props.GitIgnore = value;
+                PropsDirty = true;
+            }
         }
-        /// <summary>Represents the local path of the Git repository associated with the Grooper Project.</summary>
-        /// <remarks>The repository URL points to the location where the Git project is hosted. Developers can use this URL to clone, fetch, or push changes to the repository. It's an essential link for collaboration and code management.</remarks>
-        [DataMember, Viewable]
-        public string LocalPath { get => Props.LocalPath; set { Props.LocalPath = value; PropsDirty = true; } }
 
         public override ValidationErrorList ValidateProperties()
         {

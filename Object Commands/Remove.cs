@@ -1,5 +1,8 @@
 using Grooper;
+using System;
 using System.Collections.Generic;
+
+using static GrooperGit.Utils;
 
 #pragma warning disable 1591
 
@@ -9,6 +12,8 @@ namespace GrooperGit
     {
         protected override void Execute(GrooperNode Item)
         {
+            string name = "sean";
+            name = MonoSpace(name);
             GitProject parentProject = (GitProject)Item.ParentProject;
             parentProject.Repository.Remove(Item);
         }
