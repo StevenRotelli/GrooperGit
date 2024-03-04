@@ -1,0 +1,38 @@
+name: Generate Grooper Importable Zip
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+        
+    - name: Install Python Dependencies
+      run: |
+        pip install --upgrade pip
+        # Install any other dependencies your script may need
+
+    - name: Generate Special Archive Structure
+      run: python .github/scripts/generate_archive.py
+
+    - name: Zip the Archive
+      run: zip -r GrooperThemes.zip GrooperThemes
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./GrooperThemes.zip
+        asset_name: GrooperThemes.zip
+        asset_content_type: application/zip
