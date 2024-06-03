@@ -85,7 +85,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\FileManager.cs" />
     <Compile Include="Classes\Utils.cs" />
     <Compile Include="Classes\GitHubOauth.cs" />
     <Compile Include="Classes\GitRepository.cs" />
@@ -142,6 +141,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
