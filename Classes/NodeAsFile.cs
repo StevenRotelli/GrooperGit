@@ -5,7 +5,7 @@ using System.Collections.Generic;
 #pragma warning disable CS1591
 namespace GrooperGit
 {
-    public class NodeAsFile
+    public class ToGitRepo
     {
         public string LocalPath;
         public GrooperNode OwnerNode;
@@ -14,7 +14,7 @@ namespace GrooperGit
         public List<DirectoryInfo> Files;
         public GitProject ParentProject;
 
-        public NodeAsFile(GrooperNode owner)
+        public ToGitRepo(GrooperNode owner)
         {
             OwnerNode = owner;
             ParentProject = (GitProject)owner.ParentProject;

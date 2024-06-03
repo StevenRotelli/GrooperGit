@@ -4,6 +4,8 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 11.0.61219.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrooperGit", "GrooperGit.csproj", "{1151EBFF-BDEF-44E7-8B3C-267475346731}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Grooper", "GrooperLib\Grooper.vbproj", "{B59EBEFA-A076-4F56-8906-2A99328E55DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -13,8 +13,9 @@ namespace GrooperGit
     [DataContract, HelpBase]
     public class GitRepository : EmbeddedObject
     {
-        private string _localPath;
-
+        private readonly string _localPath;
+        ///<summary>Has the repository been initialized</summary>
+        public bool Initialized { get; }
         /// <inheritdoc/>
         public GitRepository(ConnectedObject Owner) : base(Owner)
         {
@@ -45,7 +46,7 @@ namespace GrooperGit
         {
             foreach (GrooperNode node in OwnerNode.AllChildren)
             {
-                NodeAsFile nodeAsFile = new NodeAsFile(node);
+                ToGitRepo nodeAsFile = new ToGitRepo(node);
                 nodeAsFile.WriteAll();
             }
         }

@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 namespace GrooperGit
 {
     /// <summary>
-    /// A Git Project is a library of resources that can be version controlled and managed by other people.
+    /// A Git Project is a library of resources that can be version controlled and managed via git.
     /// It serves as the primary container in which design components are created and organized.
     /// </summary>
     /// <remarks>

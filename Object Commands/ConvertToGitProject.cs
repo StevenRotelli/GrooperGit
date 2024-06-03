@@ -51,7 +51,7 @@ namespace GrooperGit
 
             foreach (GrooperNode childNode in projectNode.AllChildren)
             {
-                NodeAsFile nodeAsFile = new NodeAsFile(childNode);
+                ToGitRepo nodeAsFile = new ToGitRepo(childNode);
                 nodeAsFile.WriteAll();
             }
         }

@@ -57,7 +57,7 @@ namespace GrooperGit
                 }
             };
 
-            process.Start();
+            _ = process.Start();
 
             string output = process.StandardOutput.ReadToEnd();
             string errorOutput = process.StandardError.ReadToEnd();

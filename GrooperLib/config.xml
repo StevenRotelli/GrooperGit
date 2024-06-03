@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config>
+	<assemblies>
+		<assembly>Grooper.Globalization</assembly>
+		<assembly>Grooper.IP</assembly>
+		<assembly>Grooper.OCR</assembly>
+		<assembly>Grooper.PDF</assembly>
+		<assembly>Grooper.Core</assembly>
+		<assembly>Grooper.Extract</assembly>
+		<assembly>Grooper.EDI</assembly>
+		<assembly>Grooper.Office</assembly>
+		<assembly>Grooper.Messaging</assembly>
+		<assembly>Grooper.Services</assembly>
+		<assembly>Grooper.Services.CMIS</assembly>
+		<assembly>Grooper.Activities</assembly>
+		<assembly>Grooper.Capture.ColorTrac</assembly>
+		<assembly>Grooper.CMIS</assembly>
+		<assembly>Grooper.Capture</assembly>
+		<assembly>Grooper.Cloud</assembly>
+		<assembly>Grooper.Microform</assembly>
+	</assemblies>
+</config>

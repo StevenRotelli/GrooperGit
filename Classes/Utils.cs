@@ -8,7 +8,6 @@ namespace GrooperGit
             List<char> newstring = new List<char>();
             foreach (char c in input)
             {
-
                 newstring.Add(c);
                 newstring.Add(' ');
             }
